@@ -37,9 +37,16 @@ function OurNavbar() {
   };
   return (
     <div>
-      <MDBNavbar expand="lg" light bgColor="light">
-        <MDBContainer fluid>
-          <MDBNavbarBrand href="#">SportApp</MDBNavbarBrand>
+      <MDBNavbar expand="lg" style={{ backgroundColor: "#77DD77" }}>
+        <MDBContainer fluid style={{ backgroundColor: "#77DD77" }}>
+          <MDBNavbarBrand href="#">
+            <img
+              src="https://toppng.com/public/uploads/preview/silhouette-football-player-shooting-soccer-player-silhouette-11563236530t8inyn0tfx.png"
+              alt="..."
+              height="36"
+            />
+            SportApp
+          </MDBNavbarBrand>
 
           <MDBNavbarToggler
             aria-controls="navbarSupportedContent"
@@ -54,7 +61,7 @@ function OurNavbar() {
             <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
               <MDBNavbarItem>
                 <MDBNavbarLink active aria-current="page" href="#">
-                  Home
+                  <div>Home</div>
                 </MDBNavbarLink>
               </MDBNavbarItem>
               <MDBNavbarItem>
@@ -69,21 +76,11 @@ function OurNavbar() {
                     Categories
                   </MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem link>Action</MDBDropdownItem>
+                    <MDBDropdownItem link>FootBall</MDBDropdownItem>
                     <MDBDropdownItem link>Another action</MDBDropdownItem>
                     <MDBDropdownItem link>Something else here</MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
-              </MDBNavbarItem>
-
-              <MDBNavbarItem>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onClick={disconnect}
-                >
-                  Logout
-                </button>
               </MDBNavbarItem>
             </MDBNavbarNav>
 
@@ -91,12 +88,22 @@ function OurNavbar() {
               <input
                 type="search"
                 className="form-control"
-                placeholder="Type query"
+                placeholder="Type Something"
                 aria-label="Search"
               />
-              <MDBBtn color="primary">Search</MDBBtn>
+              <MDBBtn color="success">Search</MDBBtn>
             </form>
           </MDBCollapse>
+          <MDBNavbarItem>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onClick={disconnect}
+              style={{ backgroundColor: "red", border: "red" }}
+            >
+              Logout
+            </button>
+          </MDBNavbarItem>
         </MDBContainer>
       </MDBNavbar>
       {view === "WorldNews" && <WorldNews />}

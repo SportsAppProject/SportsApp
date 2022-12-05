@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() =>
     onAuthStateChanged(auth, (user) => {
-      console.log("user logged in", user);
+      console.log("user ", user);
       setUser(user);
       if (initializing) {
         setInitializing(false);

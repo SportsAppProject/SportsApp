@@ -53,7 +53,9 @@ const Blog = () => {
                 <strong>{e.title}</strong>
               </h4>
               <p className="text-muted">{e.description}</p>
-              <MDBBtn>Read More</MDBBtn>
+              <MDBBtn style={{ backgroundColor: "#77DD77", border: "#77DD77" }}>
+                Read More
+              </MDBBtn>
             </MDBCol>
           </MDBRow>
         </MDBContainer>

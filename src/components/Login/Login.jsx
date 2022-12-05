@@ -30,6 +30,8 @@ const Login = () => {
   const [passw, setPassw] = useState("");
   const [dataInput, setDataInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState("");
+  const [error, setError] = useState(false);
 
   const submitThis = (e) => {
     setLoading(true);
@@ -39,17 +41,26 @@ const Login = () => {
     createUserWithEmailAndPassword(auth, email, passw)
       .then((Credential) => {
         setLoading(false);
+        setUser(Credential.user);
         console.log("User Created", Credential.user);
         return <Home />;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        setError(true);
+        console.log(err);
+      });
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, passw)
       .then((res) => console.log("User LoggedIn", res.user))
-      .then((err) => console.log(err));
+      .then((err) => {
+        setLoading(false);
+        setError(true);
+        console.log(err);
+      });
   };
 
   if (loading) {
@@ -92,6 +103,13 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <label className="form-label">Email address</label>
+                  {error ? (
+                    <p style={{ color: "red" }}>
+                      Invalid Credentials: * Please make sure your password has
+                      at least 6 characters. * If your account exists already,
+                      press Login Instead.
+                    </p>
+                  ) : null}
                 </div>
 
                 {/* <!-- Password input --> */}
