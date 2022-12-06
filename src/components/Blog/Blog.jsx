@@ -10,8 +10,8 @@ import {
 } from "mdb-react-ui-kit";
 
 let Blog = (props) => {
-  console.log(props.post);
-  console.log(props.comment);
+ 
+  // let [post, setPost] = useState([]);
 
   return (
     <div>
