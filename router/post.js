@@ -8,7 +8,10 @@ const {
   delPost,
   updatepost,
   updatelike,
+  getFootballNews, // getting only the news of football . 
 } = require("../controllers/post.js");
+
+router.get("/getFootballNews",getFootballNews)  // getting only the news of football . 
 
 router.get("/getall", getAllPosts); // get all posts
 

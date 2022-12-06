@@ -60,4 +60,11 @@ module.exports = {
       callback(error, results);
     });
   },
+
+  football: function (callback) {
+    const sql = "SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.categorie='football' ";
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  }
 };
