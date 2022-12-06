@@ -64,4 +64,11 @@ module.exports = {
       req.params.id
     );
   },
+
+  getFootballNews: function (req, res) {
+    posts.football(function (err, results) {
+      if (err) res.status(500).send(err);
+      else res.json(results);
+    });
+  }
 };
