@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { getAuth, signOut } from "firebase/auth";
+import axios from "axios"
 
 import {
   MDBContainer,
@@ -20,10 +21,24 @@ import {
 } from "mdb-react-ui-kit";
 import { Button } from "react-bootstrap";
 import WorldNews from "../WorldNews/WorldNews.jsx";
+import FootballNews from "../FootballNews/FootballNews.jsx";
+
 
 function OurNavbar() {
   const [view, setView] = useState("Home");
   const [showBasic, setShowBasic] = useState(false);
+  const [footballNews,setFootballNews] = useState([])
+
+
+  useEffect(() => {
+    async function getResults() {
+      const results = await axios('http://localhost:3000/api/posts/getFootballNews');
+      setFootballNews(results.data)
+    }
+    getResults()
+  },[])
+
+
 
   const disconnect = () => {
     const auth = getAuth();
@@ -76,7 +91,7 @@ function OurNavbar() {
                     Categories
                   </MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem link>FootBall</MDBDropdownItem>
+                    <MDBDropdownItem link onClick={()=>setView("football")}>FootBall</MDBDropdownItem>
                     <MDBDropdownItem link>Another action</MDBDropdownItem>
                     <MDBDropdownItem link>Something else here</MDBDropdownItem>
                   </MDBDropdownMenu>
@@ -106,6 +121,7 @@ function OurNavbar() {
           </MDBNavbarItem>
         </MDBContainer>
       </MDBNavbar>
+      {view==="football" && <FootballNews data={footballNews}/>}
       {view === "WorldNews" && <WorldNews />}
     </div>
   );
