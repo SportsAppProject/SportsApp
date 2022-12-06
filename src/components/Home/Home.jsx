@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Blog from "../Blog/Blog.jsx";
-import { getAuth, signOut } from "firebase/auth";
+import Footer from "../Footer/Footer.jsx";
+
 import OurNavbar from "../NavBar/Navbar.jsx";
 
 const Home = () => {
@@ -8,6 +8,7 @@ const Home = () => {
     <div>
       {/* <!--Navbar --> */}
       <OurNavbar />
+      <Footer />
     </div>
   );
 };

@@ -20,6 +20,7 @@ import {
 } from "mdb-react-ui-kit";
 import { Button } from "react-bootstrap";
 import WorldNews from "../WorldNews/WorldNews.jsx";
+import Home from "../Home/Home.jsx";
 
 function OurNavbar() {
   const [view, setView] = useState("Home");
