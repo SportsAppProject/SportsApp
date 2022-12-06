@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import AddBlog from "../AddBlog/AddBlog.jsx";
 import {
   MDBBtn,
   MDBCard,
@@ -8,12 +9,34 @@ import {
   MDBRipple,
   MDBTextArea,
 } from "mdb-react-ui-kit";
-import {useState} from 'react'
-import axios from 'axios'
 
 let Blog = (props) => {
- 
-  // let [post, setPost] = useState([]);
+  let [like, setlike] = useState(3);
+  const [view, setView] = useState("Blog");
+  const [check, setCheck] = useState(false);
+
+  let next = () => {
+    setlike(like++);
+  };
+
+  let previous = () => {
+    setlike(like--);
+  };
+  console.log(like);
+
+  // i will fix it later
+  let put = (like, id) => {
+    axios
+      .put(`http://localhost:5000/api/posts/updatelike/${id}`, {
+        like: like,
+      })
+      .then(() => {
+        console.log("like updated");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const[comments,setComments]=useState([])
   const[viewComment,setViewComment]=useState(false)
@@ -30,6 +53,10 @@ let Blog = (props) => {
 
   return (
     <div>
+      <div>
+        <AddBlog />
+      </div>
+
       <div>
         {props.post.map((element, i) => {
           return (
@@ -104,7 +131,7 @@ let Blog = (props) => {
                         </div>
                         <div>
                           <a href="#!" className="text-muted">
-
+                            counter of comments
                           </a>
                         </div>
                       </div>
@@ -112,11 +139,7 @@ let Blog = (props) => {
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           <MDBIcon fas icon="thumbs-up" className="me-2" /> Like
                         </MDBBtn>
-                        {/** COMMENT BUTTON HERE  */}
-                        <MDBBtn size="lg" rippleColor="dark" color="link" onClick={()=>{getComments(element.idpost)
-                       
-                        console.log(comments)
-                        }}>
+                        <MDBBtn size="lg" rippleColor="dark" color="link">
                           <MDBIcon fas icon="comment-alt" className="me-2" />{" "}
                           Comments
                         </MDBBtn>
@@ -134,11 +157,14 @@ let Blog = (props) => {
                           />
                         </a>
                         <MDBTextArea
-                          label="Message"
                           id="textAreaExample"
                           rows={2}
                           wrapperClass="w-100"
                         />
+
+                        <div>
+                          <button> comment</button>
+                        </div>
                       </div>
 
 
@@ -175,6 +201,7 @@ let Blog = (props) => {
           );
         })}
       </div>
+      <div> {view === "Add" && <AddBlog />}</div>
     </div>
   );
 };
