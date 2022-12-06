@@ -1,5 +1,4 @@
 const app = require("./app.js");
-// const connection = require("../database/index.js");
 
 const port = 5000;
 

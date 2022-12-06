@@ -5,6 +5,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import React, { useState, useEffect } from "react";
 import Login from "./components/Login/Login.jsx";
 import Home from "./components/Home/Home";
+import Blog from "./components/Blog/Blog.jsx";
+import axios from "axios";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -13,7 +15,6 @@ const auth = getAuth();
 function App() {
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
-
   const [view, setView] = useState("Login");
 
   function changeView() {
@@ -40,6 +41,7 @@ function App() {
     <div className="App">
       {view === "Home" && <Home />}
       {view === "Login" && <Login />}
+      {view === "Blog" && <Blog />}
     </div>
   );
 }
