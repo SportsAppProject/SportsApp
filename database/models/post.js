@@ -56,6 +56,7 @@ module.exports = {
   },
 
   putlike: function (callback, likes, idpost) {
+    // const sql =  `UPDATE post INNER JOIN user ON post.user_iduser = user.iduser SET post.like = '${likes}' where id  `
     const sql = `UPDATE post SET likes = '${likes}' WHERE idpost ="${idpost}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
@@ -63,9 +64,10 @@ module.exports = {
   },
 
   football: function (callback) {
-    const sql = "SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.categorie='football' ";
+    const sql =
+      "SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.categorie='football' ";
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
-  }
+  },
 };

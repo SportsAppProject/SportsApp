@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Login from "./components/Login/Login.jsx";
 import Home from "./components/Home/Home";
 import Blog from "./components/Blog/Blog.jsx";
+import AddBlog from "./components/AddBlog/AddBlog.jsx";
 import axios from "axios";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
