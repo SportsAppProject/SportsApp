@@ -8,10 +8,25 @@ import {
   MDBRipple,
   MDBTextArea,
 } from "mdb-react-ui-kit";
+import {useState} from 'react'
+import axios from 'axios'
 
 let Blog = (props) => {
  
   // let [post, setPost] = useState([]);
+
+  const[comments,setComments]=useState([])
+  const[viewComment,setViewComment]=useState(false)
+
+  const getComments=(idpost)=>{
+    axios.get(`http://localhost:3000/api/comments/getCommentOnePost/${idpost}`)
+    .then((res)=>{
+      setComments(res.data)
+      setViewComment(!viewComment)
+      //console.log(res.data)
+
+    })
+  }
 
   return (
     <div>
@@ -89,7 +104,7 @@ let Blog = (props) => {
                         </div>
                         <div>
                           <a href="#!" className="text-muted">
-                            counter of comments
+
                           </a>
                         </div>
                       </div>
@@ -97,7 +112,11 @@ let Blog = (props) => {
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           <MDBIcon fas icon="thumbs-up" className="me-2" /> Like
                         </MDBBtn>
-                        <MDBBtn size="lg" rippleColor="dark" color="link">
+                        {/** COMMENT BUTTON HERE  */}
+                        <MDBBtn size="lg" rippleColor="dark" color="link" onClick={()=>{getComments(element.idpost)
+                       
+                        console.log(comments)
+                        }}>
                           <MDBIcon fas icon="comment-alt" className="me-2" />{" "}
                           Comments
                         </MDBBtn>
@@ -121,10 +140,12 @@ let Blog = (props) => {
                           wrapperClass="w-100"
                         />
                       </div>
-                      <div className="d-flex mb-3">
+
+
+                      {viewComment?<div className="d-flex mb-3">
                         <a href="#!">
                           <img
-                            src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+                            src={element.imageuser}
                             className="border rounded-circle me-2"
                             alt="Avatar"
                             style={{ height: "40px" }}
@@ -136,7 +157,7 @@ let Blog = (props) => {
                               <strong>Malcolm Dosh</strong>
                             </a>
                             <a href="#!" className="text-muted d-block">
-                              <small>{element.commentcontent}</small>
+                              <small>{comments[0].commentcontent}</small>
                             </a>
                           </div>
                           <a href="#!" className="text-muted small ms-3 me-2">
@@ -144,7 +165,7 @@ let Blog = (props) => {
                           </a>
                           <a href="#!" className="text-muted small me-2"></a>
                         </div>
-                      </div>
+                      </div>:null}
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>
                   </MDBCard>

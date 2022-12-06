@@ -38,4 +38,24 @@ module.exports = {
       req.params.id
     );
   },
+
+  getNumber:function(req,res){
+    comment.getNumber(
+      function (err, results) {
+        if (err) res.status(500).send(err);
+        else res.json(results);
+      },
+      req.params.idpost
+    )
+  },
+
+  getCommentOnePost:function(req,res){
+    comment.getCommentOnePost(
+      function (err, results) {
+        if (err) res.status(500).send(err);
+        else res.json(results);
+      },
+      req.params.idpost
+    )
+  }
 };

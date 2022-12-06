@@ -31,7 +31,7 @@ function OurNavbar() {
   useEffect(() => {
     async function getResults() {
       const results = await axios(
-        "http://localhost:5000/api/posts/getFootballNews"
+        "http://localhost:3000/api/posts/getFootballNews"
       );
       setFootballNews(results.data);
     }

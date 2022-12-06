@@ -9,14 +9,14 @@ const Home = () => {
   let [comment, setComment] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/posts/getall").then((result) => {
+    axios.get("http://localhost:3000/api/posts/getall").then((result) => {
       // console.log(result.data);
       setPost(result.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/comments/getall").then((result) => {
+    axios.get("http://localhost:3000/api/comments/getall").then((result) => {
       // console.log(result.data);
       setComment(result.data);
     });
