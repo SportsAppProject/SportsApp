@@ -73,7 +73,7 @@ function OurNavbar() {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
               <MDBNavbarItem>
-                <MDBNavbarLink active aria-current="page" href="#">
+                <MDBNavbarLink active aria-current="page" href="#" onClick={() => setView("Home")} >
                   <div>Home</div>
                 </MDBNavbarLink>
               </MDBNavbarItem>

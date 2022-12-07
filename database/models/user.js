@@ -19,7 +19,6 @@ module.exports = {
 
   update: function (
     callback,
-    mail,
     username,
     bio,
     gender,
@@ -27,9 +26,16 @@ module.exports = {
     imageuser,
     iduser
   ) {
-    const sql = `UPDATE user SET  mail ="${mail}" ,username= "${username}",bio = "${bio}", gender = "${gender}",categorie = "${categorie}",imageuser = "${imageuser}"  WHERE iduser ="${iduser}"`;
+    const sql = `UPDATE user SET username= "${username}",bio = "${bio}", gender = "${gender}",categorie = "${categorie}",imageuser = "${imageuser}"  WHERE iduser ="${iduser}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   },
+
+  getMyInfo: function (callback,iduser){
+    const sql =`SELECT * FROM user WHERE iduser="${iduser}"`
+    connection.query(sql,(err,response)=>{
+      callback(err,response)
+    })
+  }
 };

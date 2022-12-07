@@ -27,15 +27,22 @@ const Home = ({dataUser}) => {
     });
   }, []);
 
+  
+
   return (
     <div>
       <div>
         {/* <!--Navbar --> */}
         <OurNavbar />
+        
         <Profile profile={profile}/>
       </div>
     </div>
   );
 };
+
+
+
+
 
 export default Home;
