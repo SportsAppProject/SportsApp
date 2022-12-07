@@ -10,6 +10,8 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 
+import axios from 'axios';
+
 let Blog = (props) => {
   let [like, setlike] = useState(3);
   const [view, setView] = useState("Blog");

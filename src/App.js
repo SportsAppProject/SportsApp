@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      {view === "Home" && <Home />}
+      {view === "Home" && <Home dataUser={user}/>}
       {view === "Login" && <Login />}
       {view === "Blog" && <Blog />}
     </div>

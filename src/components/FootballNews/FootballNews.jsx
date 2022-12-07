@@ -36,7 +36,7 @@ export default function FootballNews({data}) {
             
             <div>
               <center>
-                <MDBContainer className="py-5">
+                <MDBContainer className="py-5 shadow-lg rounded">
                   <MDBCard style={{ maxWidth: "42rem" }}>
                     <MDBCardBody>
                       <div className="d-flex mb-3">
