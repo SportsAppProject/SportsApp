@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import axios from "axios";
-
+import Search from "../search/Search.jsx";
 import {
   MDBContainer,
   MDBNavbar,
@@ -22,11 +22,16 @@ import {
 import { Button } from "react-bootstrap";
 import WorldNews from "../WorldNews/WorldNews.jsx";
 import FootballNews from "../FootballNews/FootballNews.jsx";
+import "./Navbar.css";
+import Blog from "../Blog/Blog.jsx";
 
-function OurNavbar() {
+function OurNavbar(props) {
   const [view, setView] = useState("Home");
   const [showBasic, setShowBasic] = useState(false);
   const [footballNews, setFootballNews] = useState([]);
+  const [searched, setSearched] = useState("");
+  const [searchedData, setSearchedData] = useState([]);
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     async function getResults() {
@@ -48,6 +53,32 @@ function OurNavbar() {
         console.log(error);
       });
   };
+
+  let findPost = () => {
+    axios
+      .post(`http://localhost:5000/api/posts/search`, {
+        posttitle: searched,
+      })
+      .then((result) => {
+        setSearchedData(result.data);
+        setCheck(!check);
+      })
+      .then(() => {
+        next();
+      });
+  };
+
+  console.log(check);
+
+  let next = () => {
+    if (check === true) {
+      setView("Search");
+    }
+  };
+
+  console.log(searched);
+  console.log(searchedData, "search");
+
   return (
     <div>
       <MDBNavbar expand="lg" style={{ backgroundColor: "#77DD77" }}>
@@ -101,13 +132,24 @@ function OurNavbar() {
 
             <form className="d-flex input-group w-auto">
               <input
+                onChange={(event) => {
+                  setSearched(event.target.value);
+                }}
                 type="search"
                 className="form-control"
                 placeholder="Type Something"
                 aria-label="Search"
               />
-              <MDBBtn color="success">Search</MDBBtn>
             </form>
+            <div></div>
+            <button
+              id="but"
+              onClick={() => {
+                findPost();
+              }}
+            >
+              Search
+            </button>
           </MDBCollapse>
           <MDBNavbarItem>
             <button
@@ -123,8 +165,10 @@ function OurNavbar() {
       </MDBNavbar>
       {view === "football" && <FootballNews data={footballNews} />}
       {view === "WorldNews" && <WorldNews />}
+      {view === "Search" && <Search serchedData={searchedData} />}
     </div>
   );
 }
 
 export default OurNavbar;
+//onClick={disconnect}

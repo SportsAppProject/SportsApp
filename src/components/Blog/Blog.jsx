@@ -10,34 +10,40 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 import axios from "axios";
+import "./Blog.css";
 
 let Blog = (props) => {
-  let [like, setlike] = useState(3);
+  let [number_like, setlike] = useState(0);
   const [view, setView] = useState("Blog");
   const [check, setCheck] = useState(false);
 
-  let next = () => {
-    setlike(like++);
-  };
+  console.log(number_like);
+  console.log(check);
 
-  let previous = () => {
-    setlike(like--);
-  };
-  console.log(like);
-
-  // i will fix it later
-  let put = (like, id) => {
+  let updatelike = (number_like, id) => {
+    //  e.preventDefault();
     axios
       .put(`http://localhost:5000/api/posts/updatelike/${id}`, {
-        like: like,
+        like: number_like + 1,
       })
       .then(() => {
+        window.location.reload(true);
         console.log("like updated");
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  // let func = () => {
+  //   if (check) {
+  //     setlike(like + 1);
+  //     setCheck(!check);
+  //   } else {
+  //     setlike(like - 1);
+  //     setCheck(!check);
+  //   }
+  // };
 
   return (
     <div>
@@ -46,7 +52,7 @@ let Blog = (props) => {
       </div>
 
       <div>
-        {props.post.map((element, i) => {
+        {props.post.map((element, index) => {
           return (
             <div>
               <center>
@@ -119,13 +125,21 @@ let Blog = (props) => {
                         </div>
                       </div>
                       <div className="d-flex justify-content-between text-center border-top border-bottom mb-4">
-                        {/* <MDBBtn size="lg" rippleColor="dark" color="link">
-                          <MDBIcon fas icon="thumbs-up" className="me-2" /> */}
-                        <span onClick={() => put(like, i)}>Like</span>
-                        {/* </MDBBtn> */}
+                        <button class="button button-like">
+                          <i class="fa fa-heart"></i>
+                          <span
+                            onClick={() =>
+                              updatelike(element.likes, element.idpost)
+                            }
+                          >
+                            Like
+                            {/* 👍🏻 */}
+                          </span>
+                        </button>
+
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           <MDBIcon fas icon="comment-alt" className="me-2" />{" "}
-                          Comments
+                          Commentyyys
                         </MDBBtn>
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           {/* <MDBIcon fas icon="share" className="me-2" /> Share */}
@@ -147,33 +161,10 @@ let Blog = (props) => {
                         />
 
                         <div>
-                          <button> comment</button>
+                          <button id="comment"> comment</button>
                         </div>
                       </div>
-                      <div className="d-flex mb-3">
-                        <a href="#!">
-                          <img
-                            src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-                            className="border rounded-circle me-2"
-                            alt="Avatar"
-                            style={{ height: "40px" }}
-                          />
-                        </a>
-                        <div>
-                          <div className="bg-light rounded-3 px-3 py-1">
-                            <a href="#!" className="text-dark mb-0">
-                              <strong>Malcolm Dosh</strong>
-                            </a>
-                            <a href="#!" className="text-muted d-block">
-                              <small>{element.commentcontent}</small>
-                            </a>
-                          </div>
-                          <a href="#!" className="text-muted small ms-3 me-2">
-                            <strong>Like</strong>
-                          </a>
-                          <a href="#!" className="text-muted small me-2"></a>
-                        </div>
-                      </div>
+
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>
                   </MDBCard>
@@ -189,3 +180,28 @@ let Blog = (props) => {
 };
 
 export default Blog;
+
+//  <div>
+//   <div className="bg-light rounded-3 px-3 py-1">
+//     <a href="#!" className="text-dark mb-0">
+//       <strong>Malcolm Dosh</strong>
+//     </a>
+//     <a href="#!" className="text-muted d-block">
+//       <small>{element.commentcontent}</small>
+//     </a>
+//   </div>
+//   <a href="#!" className="text-muted small ms-3 me-2">
+//     <strong>Like</strong>
+//   </a>
+//   <a href="#!" className="text-muted small me-2"></a>
+// </div>;
+// <div className="d-flex mb-3">
+//   <a href="#!">
+//     <img
+//       src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+//       className="border rounded-circle me-2"
+//       alt="Avatar"
+//       style={{ height: "40px" }}
+//     />
+//   </a>
+// </div>;

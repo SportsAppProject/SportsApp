@@ -1,6 +1,7 @@
 @media all and (min-width: 480px) {
   .Login {
-    padding: 60px 0;
+    padding: 60px 0; 
+    
   }
 
   .Login form {
@@ -20,4 +21,8 @@
 
 .nav-box{
   transform: translateY(-50%);
+}
+
+*{
+background-image: url("https: //images.squarespace-cdn.com/content/v1/58a1fe895016e192bf28ff7f/1568646848366-IYI7DZMOFU5L7AMJ2CTC/Eco.png?format=1500w");
 }

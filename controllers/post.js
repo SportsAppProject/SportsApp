@@ -8,13 +8,15 @@ module.exports = {
     });
   },
 
-  //method to get all post by categorie.
-  getPost: function (req, res) {
-    posts.getOne(function (err, results) {
+  //method to post  "posts" in the database
+  post_serached_Post: function (req, res) {
+    console.log(req.body.posttitle);
+    posts.search(function (err, results) {
       if (err) res.status(500).send(err);
       else res.json(results);
-    }, req.params.categorie);
+    }, req.body.posttitle);
   },
+
   //method to add a post to the database via the respective model function.
 
   addPost: function (req, res) {
@@ -60,7 +62,7 @@ module.exports = {
         if (err) res.status(500).send(err);
         else res.json(results);
       },
-      req.body.likes,
+      req.body.like,
       req.params.id
     );
   },
@@ -70,5 +72,5 @@ module.exports = {
       if (err) res.status(500).send(err);
       else res.json(results);
     });
-  }
+  },
 };

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Home from "../Home/Home";
 import ClipLoader from "react-spinners/ClipLoader";
+import "./Login.css";
 
 import { initializeApp } from "firebase/app";
 import {

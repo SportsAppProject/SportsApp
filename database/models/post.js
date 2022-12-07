@@ -4,19 +4,24 @@ const connection = require("../index");
 
 module.exports = {
   getAll: function (callback) {
-    const sql = `SELECT *FROM post INNER JOIN user ON post.user_iduser = user.iduser INNER JOIN comment ON comment.post_idpost = post_idpost;`;
+    const sql = `SELECT *FROM post INNER JOIN user ON post.user_iduser = user.iduser `;
     // const sql = `SELECT *FROM post `;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   },
 
-  getOne: function (callback, categorie) {
-    const sql = `SELECT * FROM post WHERE categorie="${categorie}"`;
+  // "SELECT idpost, postedat,posttitle,postcontent,postimage,categorie,likes,user_iduser FROM post UNION ALL SELECT idcomment, commentcontent,likes,user_iduser,post_idpost FROM comment"
+
+  search: function (callback, posttitle) {
+    // const sql = `SELECT * FROM post where (posttitle LIKE '%${posttitle}%')`;
+    const sql = `SELECT * FROM post where posttitle LIKE '%${posttitle}%'`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   },
+
+
 
   add: function (
     callback,
@@ -28,7 +33,8 @@ module.exports = {
     user_iduser,
     like
   ) {
-    const sql = `INSERT INTO post (postedat,posttitle,postcontent,postimage,categorie,user_iduser ) VALUES("${postedat}","${posttitle}", "${postcontent}","${postimage}","${categorie}","${user_iduser}" )`;
+    const sql = `INSERT INTO post (postedat,posttitle,postcontent,postimage,categorie,user_iduser ) VALUES(
+      "${postedat}","${posttitle}", "${postcontent}","${postimage}","${categorie}","${user_iduser}" )`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
