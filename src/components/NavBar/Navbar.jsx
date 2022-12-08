@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import axios from "axios";
 import Search from "../search/Search.jsx";
+import Profile from "../Profile/Profile.jsx";
+
 import {
   MDBContainer,
   MDBNavbar,
@@ -23,9 +25,6 @@ import { Button } from "react-bootstrap";
 import WorldNews from "../WorldNews/WorldNews.jsx";
 import FootballNews from "../FootballNews/FootballNews.jsx";
 import "./Navbar.css";
-import Blog from "../Blog/Blog.jsx";
-import Home from "../Home/Home.jsx";
-
 function OurNavbar(props) {
   const [view, setView] = useState("Home");
   const [showBasic, setShowBasic] = useState(false);
@@ -56,22 +55,19 @@ function OurNavbar(props) {
   };
 
   let findPost = () => {
-    axios
-      .post(`http://localhost:5000/api/posts/search`, {
-        posttitle: searched,
-      })
-      .then((result) => {
-        setSearchedData(result.data);
-        setView("Search");
-        // console.log(result);
-      });
+    axios.get("http://localhost:5000/api/posts/getall").then((result) => {
+      // console.log(result.data);
+      setSearchedData(result.data);
+      // setView("Search");
+    });
   };
 
-  console.log(check);
+  useEffect(() => findPost(), []);
+  // console.log("getAll", searchedData[0]["posttitle"]);
 
-  // console.log(searched);
-  // console.log(searchedData, "search");
-
+  function fill() {
+    return searchedData.filter((e) => e["posttitle"].includes(searched));
+  }
   return (
     <div>
       <MDBNavbar expand="lg" style={{ backgroundColor: "#77DD77" }}>
@@ -97,10 +93,22 @@ function OurNavbar(props) {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
               <MDBNavbarItem>
-                <MDBNavbarLink active aria-current="page" href="#">
+                <MDBNavbarLink
+                  active
+                  aria-current="page"
+                  href="#"
+                  onClick={() => setView("Home")}
+                >
                   <div>Home</div>
                 </MDBNavbarLink>
               </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink onClick={() => setView("Profile")} href="#">
+                  Profile
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
               <MDBNavbarItem>
                 <MDBNavbarLink onClick={() => setView("WorldNews")} href="#">
                   World News
@@ -116,8 +124,8 @@ function OurNavbar(props) {
                     <MDBDropdownItem link onClick={() => setView("football")}>
                       FootBall
                     </MDBDropdownItem>
-                    <MDBDropdownItem link>Another action</MDBDropdownItem>
-                    <MDBDropdownItem link>Something else here</MDBDropdownItem>
+                    <MDBDropdownItem link>Tennis</MDBDropdownItem>
+                    <MDBDropdownItem link>Basketball</MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavbarItem>
@@ -138,7 +146,9 @@ function OurNavbar(props) {
             <button
               id="but"
               onClick={() => {
-                findPost();
+                console.log(fill());
+                fill();
+                setView("Search");
               }}
             >
               Search
@@ -158,10 +168,10 @@ function OurNavbar(props) {
       </MDBNavbar>
       {view === "football" && <FootballNews data={footballNews} />}
       {view === "WorldNews" && <WorldNews />}
-      {view === "Search" && <Search serchedData={searchedData} />}
+      {view === "Profile" && <Profile />}
+      {view === "Search" && <Search serchedData={fill()} />}
     </div>
   );
 }
 
 export default OurNavbar;
-//onClick={disconnect}

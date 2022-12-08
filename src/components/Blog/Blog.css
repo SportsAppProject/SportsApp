@@ -1,5 +1,5 @@
 .button-like {
-    border: 2px ;
+    border: 2px;
     background-color: transparent;
     text-decoration: none;
     padding: 0px;
@@ -71,4 +71,22 @@
 .liked:hover .fa,
 .liked:hover span {
     color: #fefefe;
+}
+
+#comment {
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 15px 15px;
+    border-radius: 5px;
+    position: relative;
+    top: 4px;
+    background: rgb(119, 221, 119);
+    transition: background 0.3s ease;
+}
+
+#comment:hover {
+    background: #2c52ed;
 }

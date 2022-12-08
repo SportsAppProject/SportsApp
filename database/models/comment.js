@@ -28,4 +28,19 @@ module.exports = {
       callback(error, results);
     });
   },
+
+  getNumber : function (callback, idpost) {
+    const sql = `select count(idcomment) as number from comment where post_idpost="${idpost}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
+
+  getCommentOnePost : function(callback,idpost) {
+    const sql=`select * from comment where post_idpost="${idpost}"`
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  }
+
 };

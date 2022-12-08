@@ -8,15 +8,13 @@ module.exports = {
     });
   },
 
-  //method to post  "posts" in the database
-  post_serached_Post: function (req, res) {
-    console.log(req.body.posttitle);
-    posts.search(function (err, results) {
+  //method to get all post by categorie.
+  getPost: function (req, res) {
+    posts.getOne(function (err, results) {
       if (err) res.status(500).send(err);
       else res.json(results);
-    }, req.body.posttitle);
+    }, req.params.categorie);
   },
-
   //method to add a post to the database via the respective model function.
 
   addPost: function (req, res) {

@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Home from "../Home/Home";
 import ClipLoader from "react-spinners/ClipLoader";
-import "./Login.css";
 
 import { initializeApp } from "firebase/app";
 import {
@@ -11,6 +10,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
+import axios from "axios";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA05fVHSqrQW08aW81v77i8eC6U0TU4E88",
@@ -34,6 +35,26 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [error, setError] = useState(false);
 
+  const insertUser = (uid, emailparam) => {
+    const index = emailparam.indexOf("@");
+    const name = emailparam.substring(0, index);
+    console.log("**************** uid ", uid);
+    console.log("**************** email ", emailparam);
+    console.log("**************** email ", name);
+    axios
+      .post("http://localhost:5000/api/users/add", {
+        iduser: uid,
+        mail: emailparam,
+        username: name,
+      })
+      .then((res) => {
+        console.log("############# yeyyy it's added");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   const submitThis = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -43,7 +64,11 @@ const Login = () => {
       .then((Credential) => {
         setLoading(false);
         setUser(Credential.user);
-        console.log("User Created", Credential.user);
+        console.log("User Created test user", user);
+        // here to put the function that will insert in the database
+        console.log("######## ", Credential.user.uid);
+        console.log("######## ", Credential.user.email);
+        insertUser(Credential.user.uid, Credential.user.email); // CALLING THE FUNCTION OF INSERTING USER INTO DATABASE
         return <Home />;
       })
       .catch((err) => {
@@ -137,9 +162,10 @@ const Login = () => {
                   <a href="#!">Forgot password?</a>
                 </div>
 
-                {/* <!-- Submit button --> */}
+                {/* <!-- Submit button AND INSERTING THE NEW USER TO THE DATABASE --> */}
                 <button
                   type="submit"
+                  onClick={() => console.log("----------->", user.uid)}
                   className="btn btn-primary btn-lg btn-block"
                   style={{ backgroundColor: "#77DD77", borderColor: "#77DD77" }}
                 >

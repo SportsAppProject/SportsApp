@@ -9,6 +9,7 @@ let AddBlog = (props) => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
   const [select, setSelect] = useState("");
+  const [data, setData] = useState([]);
 
   console.log(select);
 

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddBlog from "../AddBlog/AddBlog.jsx";
+import Comment from "../Comment/Comment.jsx";
+
 import {
   MDBBtn,
   MDBCard,
@@ -9,13 +11,29 @@ import {
   MDBRipple,
   MDBTextArea,
 } from "mdb-react-ui-kit";
+
 import axios from "axios";
 import "./Blog.css";
 
 let Blog = (props) => {
   let [number_like, setlike] = useState(0);
-  const [view, setView] = useState("Blog");
+  let [view, setView] = useState("Blog");
   let [comment, setComment] = useState("");
+  let [check, setCheck] = useState(false);
+  let [commentsdata, setCommentsdata] = useState([]);
+  let [viewComment, setViewComment] = useState(false);
+
+  // function reverseit() {
+  //   var arr = [];
+  //   for (var i = props.post.length - 1; i > 0; i--) {
+  //     arr.push(props.post[i]);
+  //   }
+  //   return arr;
+  // }
+  // useEffect(() => reverseit(), []);
+  // console.log(reverseit());
+
+  // console.log(data);
 
   // console.log(number_like);
 
@@ -50,6 +68,19 @@ let Blog = (props) => {
         console.log(error);
       });
   };
+
+  ///
+  const getComments = (idpost) => {
+    axios
+      .get(`http://localhost:5000/api/comments/getCommentOnePost/${idpost}`)
+      .then((res) => {
+        setCommentsdata(res.data);
+        setView("Comment");
+        console.log(res.data);
+      });
+  };
+
+  let append = () => {};
 
   return (
     <div>
@@ -142,11 +173,15 @@ let Blog = (props) => {
                             {/* 👍🏻 */}
                           </span>
                         </button>
+                        <MDBIcon fas icon="comment-alt" className="me-2" />
 
-                        <MDBBtn size="lg" rippleColor="dark" color="link">
-                          <MDBIcon fas icon="comment-alt" className="me-2" />{" "}
-                          Comments
-                        </MDBBtn>
+                        <span
+                          onClick={() => {
+                            getComments(element.idpost);
+                          }}
+                        >
+                          Comment{" "}
+                        </span>
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           {/* <MDBIcon fas icon="share" className="me-2" /> Share */}
                         </MDBBtn>
@@ -176,13 +211,12 @@ let Blog = (props) => {
                             }}
                             id="comment"
                           >
-                            {" "}
                             comment
                           </button>
                         </div>
                       </div>
 
-                      <div className="d-flex mb-3">
+                      {/* <div className="d-flex mb-3">
                         <a href="#!">
                           <img
                             src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
@@ -200,8 +234,8 @@ let Blog = (props) => {
                           </div>
 
                           <small> {element.commentcontent} </small>
-                        </div>
-                      </div>
+                        </div> // 
+                      </div> */}
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>
                   </MDBCard>
@@ -212,39 +246,36 @@ let Blog = (props) => {
         })}
       </div>
       <div> {view === "Add" && <AddBlog />}</div>
+      <div></div>
     </div>
   );
 };
 
 export default Blog;
+
 // {
 //   props.comment.map((element, index) => {
 //     return (
-//       <div>
-//         <div className="bg-light rounded-3 px-3 py-1">
-//           <a href="#!" className="text-dark mb-0">
-//             <strong>Malcolm Dosh</strong>
-//           </a>
-//           <a href="#!" className="text-muted d-block">
-//             <small>{element.commentcontent}</small>
-//           </a>
-//         </div>
-//         <a href="#!" className="text-muted small ms-3 me-2">
-//           <strong>Like</strong>
-//         </a>
-//         <a href="#!" className="text-muted small me-2"></a>
+//      <div className="d-flex mb-3">
+//                         <a href="#!">
+//                           <img
+//                             src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+//                             className="border rounded-circle me-2"
+//                             alt="Avatar"
+//                             style={{ height: "40px" }}
+//                           />
+//                         </a>
+//                         <div>
+//                           <div className="bg-light rounded-3 px-3 py-1">
+//                             <a href="#!" className="text-dark mb-0">
+//                               <strong>Malcolm Dosh</strong>
+//                             </a>
+//                             <a href="#!" className="text-muted d-block"></a>
+//                           </div>
 
-//         <div className="d-flex mb-3">
-//           <a href="#!">
-//             <img
-//               src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-//               className="border rounded-circle me-2"
-//               alt="Avatar"
-//               style={{ height: "40px" }}
-//             />
-//           </a>
-//         </div>
-//       </div>
+//                           <small> {element.commentcontent} </small>
+//                         </div> //
+//                       </div>
 //     );
 //   });
 // }
