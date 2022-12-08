@@ -15,19 +15,18 @@ import "./Blog.css";
 let Blog = (props) => {
   let [number_like, setlike] = useState(0);
   const [view, setView] = useState("Blog");
-  const [check, setCheck] = useState(false);
+  let [comment, setComment] = useState("");
 
-  console.log(number_like);
-  console.log(check);
+  // console.log(number_like);
 
   let updatelike = (number_like, id) => {
-    //  e.preventDefault();
+    // e.preventDefault();
     axios
       .put(`http://localhost:5000/api/posts/updatelike/${id}`, {
         like: number_like + 1,
       })
       .then(() => {
-        window.location.reload(true);
+        window.location.reload();
         console.log("like updated");
       })
       .catch((error) => {
@@ -35,15 +34,22 @@ let Blog = (props) => {
       });
   };
 
-  // let func = () => {
-  //   if (check) {
-  //     setlike(like + 1);
-  //     setCheck(!check);
-  //   } else {
-  //     setlike(like - 1);
-  //     setCheck(!check);
-  //   }
-  // };
+  let addComment = (id_user, id_post) => {
+    axios
+      .post(`http://localhost:5000/api/comments/add`, {
+        commentcontent: comment,
+        likes: 0,
+        user_iduser: id_user,
+        post_idpost: id_post,
+      })
+      .then(() => {
+        window.location.reload(false);
+        console.log("added");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -139,7 +145,7 @@ let Blog = (props) => {
 
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           <MDBIcon fas icon="comment-alt" className="me-2" />{" "}
-                          Commentyyys
+                          Comments
                         </MDBBtn>
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           {/* <MDBIcon fas icon="share" className="me-2" /> Share */}
@@ -155,16 +161,47 @@ let Blog = (props) => {
                           />
                         </a>
                         <MDBTextArea
+                          onChange={(event) => {
+                            setComment(event.target.value);
+                          }}
                           id="textAreaExample"
                           rows={2}
                           wrapperClass="w-100"
                         />
 
                         <div>
-                          <button id="comment"> comment</button>
+                          <button
+                            onClick={() => {
+                              addComment(element.user_iduser, element.idpost);
+                            }}
+                            id="comment"
+                          >
+                            {" "}
+                            comment
+                          </button>
                         </div>
                       </div>
 
+                      <div className="d-flex mb-3">
+                        <a href="#!">
+                          <img
+                            src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+                            className="border rounded-circle me-2"
+                            alt="Avatar"
+                            style={{ height: "40px" }}
+                          />
+                        </a>
+                        <div>
+                          <div className="bg-light rounded-3 px-3 py-1">
+                            <a href="#!" className="text-dark mb-0">
+                              <strong>Malcolm Dosh</strong>
+                            </a>
+                            <a href="#!" className="text-muted d-block"></a>
+                          </div>
+
+                          <small> {element.commentcontent} </small>
+                        </div>
+                      </div>
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>
                   </MDBCard>
@@ -180,28 +217,34 @@ let Blog = (props) => {
 };
 
 export default Blog;
+// {
+//   props.comment.map((element, index) => {
+//     return (
+//       <div>
+//         <div className="bg-light rounded-3 px-3 py-1">
+//           <a href="#!" className="text-dark mb-0">
+//             <strong>Malcolm Dosh</strong>
+//           </a>
+//           <a href="#!" className="text-muted d-block">
+//             <small>{element.commentcontent}</small>
+//           </a>
+//         </div>
+//         <a href="#!" className="text-muted small ms-3 me-2">
+//           <strong>Like</strong>
+//         </a>
+//         <a href="#!" className="text-muted small me-2"></a>
 
-//  <div>
-//   <div className="bg-light rounded-3 px-3 py-1">
-//     <a href="#!" className="text-dark mb-0">
-//       <strong>Malcolm Dosh</strong>
-//     </a>
-//     <a href="#!" className="text-muted d-block">
-//       <small>{element.commentcontent}</small>
-//     </a>
-//   </div>
-//   <a href="#!" className="text-muted small ms-3 me-2">
-//     <strong>Like</strong>
-//   </a>
-//   <a href="#!" className="text-muted small me-2"></a>
-// </div>;
-// <div className="d-flex mb-3">
-//   <a href="#!">
-//     <img
-//       src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-//       className="border rounded-circle me-2"
-//       alt="Avatar"
-//       style={{ height: "40px" }}
-//     />
-//   </a>
-// </div>;
+//         <div className="d-flex mb-3">
+//           <a href="#!">
+//             <img
+//               src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+//               className="border rounded-circle me-2"
+//               alt="Avatar"
+//               style={{ height: "40px" }}
+//             />
+//           </a>
+//         </div>
+//       </div>
+//     );
+//   });
+// }

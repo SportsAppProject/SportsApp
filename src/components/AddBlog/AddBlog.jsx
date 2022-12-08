@@ -119,7 +119,6 @@ let AddBlog = (props) => {
             </button>
           </div>
         </div>
-        
       </body>
     </div>
 

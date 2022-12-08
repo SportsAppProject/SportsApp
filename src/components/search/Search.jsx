@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddBlog from "../AddBlog/AddBlog.jsx";
+
 import {
   MDBBtn,
   MDBCard,
@@ -11,7 +11,19 @@ import {
 } from "mdb-react-ui-kit";
 
 let Search = (props) => {
-  console.log(props.serchedData);
+  // console.log(props.serchedData, "hethi mel search");
+
+  console.log(props.serchedData, "hethi data jeya mel navbar ll search ");
+  console.log(props.post, "trah chouf ");
+
+  // console.log(props.post[0]);
+
+  // let [data, setData] = useState([]);
+
+  // async function ched() {
+  //   await setData(props.post);
+  // }
+  // console.log(data, "hethi data");
 
   return (
     <div>
@@ -42,7 +54,7 @@ let Search = (props) => {
                         style={{ marginTop: "-6px" }}
                       >
                         {/* <small>{element.postedat}</small> <br /> */}
-                        <small> props.serchedData.postedat</small> <br />
+                        <small> props.post[0].postedat</small> <br />
                         {/* <small className="text-muted">{element.categorie}</small> */}
                         <small className="text-muted">
                           element.categorie: football

@@ -24,6 +24,7 @@ import WorldNews from "../WorldNews/WorldNews.jsx";
 import FootballNews from "../FootballNews/FootballNews.jsx";
 import "./Navbar.css";
 import Blog from "../Blog/Blog.jsx";
+import Home from "../Home/Home.jsx";
 
 function OurNavbar(props) {
   const [view, setView] = useState("Home");
@@ -61,23 +62,15 @@ function OurNavbar(props) {
       })
       .then((result) => {
         setSearchedData(result.data);
-        setCheck(!check);
-      })
-      .then(() => {
-        next();
+        setView("Search");
+        // console.log(result);
       });
   };
 
   console.log(check);
 
-  let next = () => {
-    if (check === true) {
-      setView("Search");
-    }
-  };
-
-  console.log(searched);
-  console.log(searchedData, "search");
+  // console.log(searched);
+  // console.log(searchedData, "search");
 
   return (
     <div>

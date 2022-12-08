@@ -4,8 +4,10 @@ const connection = require("../index");
 
 module.exports = {
   getAll: function (callback) {
-    const sql = `SELECT *FROM post INNER JOIN user ON post.user_iduser = user.iduser `;
+    const sql = `SELECT *FROM post INNER JOIN user ON post.user_iduser=user.iduser`;
     // const sql = `SELECT *FROM post `;
+    // const sql =
+    //   "SELECT * FROM comment INNER JOIN user ON comment.user_iduser=user.iduser INNER JOIN post ON comment.post_idpost=idpost";
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -20,8 +22,6 @@ module.exports = {
       callback(error, results);
     });
   },
-
-
 
   add: function (
     callback,

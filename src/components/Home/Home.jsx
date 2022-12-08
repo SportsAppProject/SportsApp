@@ -10,7 +10,6 @@ const Home = () => {
   let [comment, setComment] = useState([]);
   let [user, setUser] = useState([]);
 
-
   useEffect(() => {
     axios.get("http://localhost:5000/api/posts/getall").then((result) => {
       // console.log(result.data);
@@ -36,9 +35,9 @@ const Home = () => {
     <div>
       <div>
         {/* <!--Navbar --> */}
-        <OurNavbar  />
+        <OurNavbar />
         <Blog post={post} user={user} comment={comment} />
-        <Search />
+        <Search post={post} />
       </div>
     </div>
   );
