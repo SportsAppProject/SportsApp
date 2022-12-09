@@ -6,6 +6,7 @@ import Profile from '../Profile/Profile.jsx'
 import axios from "axios";
 
 
+
 const Home = ({dataUser}) => {
  // console.log("------->",dataUser)
   let [post, setPost] = useState([]);
@@ -36,6 +37,7 @@ const Home = ({dataUser}) => {
         <OurNavbar />
         
         <Profile profile={profile}/>
+        
       </div>
     </div>
   );

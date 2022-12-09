@@ -37,10 +37,11 @@ module.exports = {
   },
 
   getCommentOnePost : function(callback,idpost) {
-    const sql=`select * from comment where post_idpost="${idpost}"`
+    const sql=`SELECT * FROM comment INNER JOIN user ON comment.user_iduser = user.iduser WHERE comment.post_idpost=${idpost} `
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   }
+  //`select * from comment where post_idpost="${idpost}"` 
 
 };
