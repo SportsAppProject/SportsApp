@@ -42,6 +42,5 @@ module.exports = {
       callback(error, results);
     });
   }
-  //`select * from comment where post_idpost="${idpost}"` 
 
 };

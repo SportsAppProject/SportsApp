@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import axios from "axios";
+import Search from "../search/Search.jsx";
+import Profile from "../Profile/Profile.jsx";
+import { useNavigate } from "react-router-dom";
 
 import {
   MDBContainer,
@@ -22,16 +25,21 @@ import {
 import { Button } from "react-bootstrap";
 import WorldNews from "../WorldNews/WorldNews.jsx";
 import FootballNews from "../FootballNews/FootballNews.jsx";
+import "./Navbar.css";
 
-function OurNavbar() {
+function OurNavbar(props) {
+  const navigate = useNavigate();
   const [view, setView] = useState("Home");
   const [showBasic, setShowBasic] = useState(false);
   const [footballNews, setFootballNews] = useState([]);
+  const [searched, setSearched] = useState("");
+  const [searchedData, setSearchedData] = useState([]);
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     async function getResults() {
       const results = await axios(
-        "http://localhost:3000/api/posts/getFootballNews"
+        "http://localhost:5000/api/posts/getFootballNews"
       );
       setFootballNews(results.data);
     }
@@ -43,11 +51,29 @@ function OurNavbar() {
     signOut(auth)
       .then((res) => {
         console.log(res);
+        if (res === undefined) {
+          navigate("/login");
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  let findPost = () => {
+    axios.get("http://localhost:5000/api/posts/getall").then((result) => {
+      // console.log(result.data);
+      setSearchedData(result.data);
+      // setView("Search");
+    });
+  };
+
+  useEffect(() => findPost(), []);
+  // console.log("getAll", searchedData[0]["posttitle"]);
+
+  function fill() {
+    return searchedData.filter((e) => e["posttitle"].includes(searched));
+  }
   return (
     <div>
       <MDBNavbar expand="lg" style={{ backgroundColor: "#77DD77" }}>
@@ -73,12 +99,30 @@ function OurNavbar() {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
               <MDBNavbarItem>
-                <MDBNavbarLink active aria-current="page" href="#" onClick={() => setView("Home")} >
+                <MDBNavbarLink
+                  active
+                  aria-current="page"
+                  href="#"
+                  onClick={() => navigate("/home")}
+                >
                   <div>Home</div>
                 </MDBNavbarLink>
               </MDBNavbarItem>
+
               <MDBNavbarItem>
-                <MDBNavbarLink onClick={() => setView("WorldNews")} href="#">
+                <MDBNavbarLink onClick={() => navigate("/profile")}>
+                  Profile
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink onClick={() => navigate("/Blog")}>
+                  Blog
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink onClick={() => navigate("/worldnews")}>
                   World News
                 </MDBNavbarLink>
               </MDBNavbarItem>
@@ -92,8 +136,8 @@ function OurNavbar() {
                     <MDBDropdownItem link onClick={() => setView("football")}>
                       FootBall
                     </MDBDropdownItem>
-                    <MDBDropdownItem link>Another action</MDBDropdownItem>
-                    <MDBDropdownItem link>Something else here</MDBDropdownItem>
+                    <MDBDropdownItem link>Tennis</MDBDropdownItem>
+                    <MDBDropdownItem link>Basketball</MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavbarItem>
@@ -101,13 +145,26 @@ function OurNavbar() {
 
             <form className="d-flex input-group w-auto">
               <input
+                onChange={(event) => {
+                  setSearched(event.target.value);
+                }}
                 type="search"
                 className="form-control"
                 placeholder="Type Something"
                 aria-label="Search"
               />
-              <MDBBtn color="success">Search</MDBBtn>
             </form>
+            <div></div>
+            <button
+              id="but"
+              onClick={() => {
+                console.log(fill());
+                fill();
+                setView("Search");
+              }}
+            >
+              Search
+            </button>
           </MDBCollapse>
           <MDBNavbarItem>
             <button
@@ -122,7 +179,7 @@ function OurNavbar() {
         </MDBContainer>
       </MDBNavbar>
       {view === "football" && <FootballNews data={footballNews} />}
-      {view === "WorldNews" && <WorldNews />}
+      {view === "Search" && <Search serchedData={fill()} />}
     </div>
   );
 }

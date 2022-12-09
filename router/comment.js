@@ -10,11 +10,11 @@ const {
   getCommentOnePost,
 } = require("../controllers/comment.js");
 
-router.get("/getNumber/:idpost",getNumber)
+router.get("/getNumber/:idpost", getNumber);
 
 router.get("/getall", getAllComments);
 
-router.get("/getCommentOnePost/:idpost",getCommentOnePost)
+router.get("/getCommentOnePost/:idpost", getCommentOnePost);
 
 router.post("/add", addComment);
 

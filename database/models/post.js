@@ -11,6 +11,8 @@ module.exports = {
     });
   },
 
+  // "SELECT * FROM post INNER JOIN user ON post.user_iduser1=user.iduser INNER JOIN comment ON post.comment_idcomment=idcomment"
+
   getOne: function (callback, categorie) {
     const sql = `SELECT * FROM post WHERE categorie="${categorie}"`;
     connection.query(sql, function (error, results) {

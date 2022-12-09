@@ -8,9 +8,15 @@ import {
 } from "mdb-react-ui-kit";
 import axios from "axios";
 import options from "./API";
+import Navbar from "../NavBar/Navbar.jsx";
+import Popshow from "./Popshow.jsx"
 
 const Blog = () => {
   const [data, setData] = useState([]);
+
+
+
+
 
   const fetch = () => {
     axios
@@ -25,7 +31,9 @@ const Blog = () => {
   };
   useEffect(() => fetch(), []);
 
+  <Navbar />;
   return data.map((e) => {
+   
     return (
       <div>
         <MDBContainer className="py-5">
@@ -53,10 +61,11 @@ const Blog = () => {
                 <strong>{e.title}</strong>
               </h4>
               <p className="text-muted">{e.description}</p>
-              <MDBBtn style={{ backgroundColor: "#77DD77", border: "#77DD77" }}>
-                Read More
-              </MDBBtn>
+           <Popshow data={e}/>
             </MDBCol>
+
+               
+
           </MDBRow>
         </MDBContainer>
       </div>
