@@ -26,7 +26,6 @@ module.exports = {
         if (err) res.status(500).send(err);
         else res.json(results);
       },
-      req.body.mail,
       req.body.username,
       req.body.bio,
       req.body.gender,
@@ -35,4 +34,13 @@ module.exports = {
       req.params.iduser
     );
   },
+
+  getMyInfo: function (req,res) {
+    users.getMyInfo(
+      function(err,response){
+        if(err) res.status(500).send(err)
+        else res.json(response)
+      },req.params.iduser
+    )
+  }
 };

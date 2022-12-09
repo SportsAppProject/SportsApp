@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import AddBlog from "../AddBlog/AddBlog.jsx";
+import Comment from "../Comment/Comment.jsx";
+import Navbar from "../NavBar/Navbar.jsx";
+
 import {
   MDBBtn,
   MDBCard,
@@ -9,14 +13,87 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 
+import axios from "axios";
+import "./Blog.css";
+
 let Blog = (props) => {
- 
-  // let [post, setPost] = useState([]);
+  let [number_like, setlike] = useState(0);
+  let [view, setView] = useState("Blog");
+  let [commentsdata, setCommentsdata] = useState([]);
+  let [viewComment, setViewComment] = useState(false);
+  let [post, setPost] = useState([]);
+  let [comment, setComment] = useState([]);
+  let [check, setCheck] = useState(false);
+
+  let updatelike = (number_like, id) => {
+    // e.preventDefault();
+    axios
+      .put(`http://localhost:5000/api/posts/updatelike/${id}`, {
+        like: number_like + 1,
+      })
+      .then(() => {
+        window.location.reload();
+        console.log("like updated");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  let addComment = (id_user, id_post) => {
+    axios
+      .post(`http://localhost:5000/api/comments/add`, {
+        commentcontent: comment,
+        likes: 0,
+        user_iduser: id_user,
+        post_idpost: id_post,
+      })
+      .then(() => {
+        window.location.reload(false);
+        console.log("added");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  ///
+  const getComments = (idpost) => {
+    axios
+      .get(`http://localhost:5000/api/comments/getCommentOnePost/${idpost}`)
+      .then((res) => {
+        setCommentsdata(res.data);
+        setView("Comment");
+        console.log(res.data);
+      });
+  };
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/comments/getall").then((result) => {
+      // console.log(result.data);
+      setComment(result.data);
+    });
+  }, []);
+  const toggleCheck = () => {
+    setCheck(!check);
+  };
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/posts/getall").then((result) => {
+      // console.log(result.data);
+      setPost(result.data);
+    });
+  }, []);
 
   return (
     <div>
+      <Navbar />
       <div>
-        {props.post.map((element, i) => {
+        <AddBlog />
+      </div>
+
+      <div>
+        {post.map((element, index) => {
           return (
             <div>
               <center>
@@ -87,20 +164,28 @@ let Blog = (props) => {
                             <span> {element.likes} like</span>
                           </a>
                         </div>
-                        <div>
-                          <a href="#!" className="text-muted">
-                            counter of comments
-                          </a>
-                        </div>
                       </div>
                       <div className="d-flex justify-content-between text-center border-top border-bottom mb-4">
-                        <MDBBtn size="lg" rippleColor="dark" color="link">
-                          <MDBIcon fas icon="thumbs-up" className="me-2" /> Like
-                        </MDBBtn>
-                        <MDBBtn size="lg" rippleColor="dark" color="link">
-                          <MDBIcon fas icon="comment-alt" className="me-2" />{" "}
-                          Comments
-                        </MDBBtn>
+                        <button class="button button-like">
+                          <i class="fa fa-heart"></i>
+                          <span
+                            onClick={() =>
+                              updatelike(element.likes, element.idpost)
+                            }
+                          >
+                            Like
+                            {/* 👍🏻 */}
+                          </span>
+                        </button>
+                        <MDBIcon fas icon="comment-alt" className="me-2" />
+
+                        <span
+                          onClick={() => {
+                            getComments(element.idpost);
+                          }}
+                        >
+                          Comment{" "}
+                        </span>
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           {/* <MDBIcon fas icon="share" className="me-2" /> Share */}
                         </MDBBtn>
@@ -115,13 +200,27 @@ let Blog = (props) => {
                           />
                         </a>
                         <MDBTextArea
-                          label="Message"
+                          onChange={(event) => {
+                            setComment(event.target.value);
+                          }}
                           id="textAreaExample"
                           rows={2}
                           wrapperClass="w-100"
                         />
+
+                        <div>
+                          <button
+                            onClick={() => {
+                              addComment(element.user_iduser, element.idpost);
+                            }}
+                            id="comment"
+                          >
+                            comment
+                          </button>
+                        </div>
                       </div>
-                      <div className="d-flex mb-3">
+
+                      {/* <div className="d-flex mb-3">
                         <a href="#!">
                           <img
                             src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
@@ -135,16 +234,12 @@ let Blog = (props) => {
                             <a href="#!" className="text-dark mb-0">
                               <strong>Malcolm Dosh</strong>
                             </a>
-                            <a href="#!" className="text-muted d-block">
-                              <small>{element.commentcontent}</small>
-                            </a>
+                            <a href="#!" className="text-muted d-block"></a>
                           </div>
-                          <a href="#!" className="text-muted small ms-3 me-2">
-                            <strong>Like</strong>
-                          </a>
-                          <a href="#!" className="text-muted small me-2"></a>
-                        </div>
-                      </div>
+
+                          <small> {element.commentcontent} </small>
+                        </div> // 
+                      </div> */}
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>
                   </MDBCard>
@@ -154,8 +249,37 @@ let Blog = (props) => {
           );
         })}
       </div>
+      <div> {view === "Add" && <AddBlog />}</div>
+      <div></div>
     </div>
   );
 };
 
 export default Blog;
+
+// {
+//   props.comment.map((element, index) => {
+//     return (
+//      <div className="d-flex mb-3">
+//                         <a href="#!">
+//                           <img
+//                             src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+//                             className="border rounded-circle me-2"
+//                             alt="Avatar"
+//                             style={{ height: "40px" }}
+//                           />
+//                         </a>
+//                         <div>
+//                           <div className="bg-light rounded-3 px-3 py-1">
+//                             <a href="#!" className="text-dark mb-0">
+//                               <strong>Malcolm Dosh</strong>
+//                             </a>
+//                             <a href="#!" className="text-muted d-block"></a>
+//                           </div>
+
+//                           <small> {element.commentcontent} </small>
+//                         </div> //
+//                       </div>
+//     );
+//   });
+// }

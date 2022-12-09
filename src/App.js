@@ -5,13 +5,19 @@ import React, { useState, useEffect } from "react";
 import Login from "./components/Login/Login.jsx";
 import Home from "./components/Home/Home";
 import Blog from "./components/Blog/Blog.jsx";
+import AddBlog from "./components/AddBlog/AddBlog.jsx";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Profile from "./components/Profile/Profile";
+import WorldNews from "./components/WorldNews/WorldNews.jsx";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
 
 function App() {
+  const navigate = useNavigate();
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
   const [view, setView] = useState("Login");
@@ -19,9 +25,9 @@ function App() {
   function changeView() {
     if (initializing) return null;
     if (!user) {
-      return setView("Login");
+      navigate("/login");
     } else {
-      return setView("Home");
+      navigate("/home");
     }
   }
 
@@ -32,15 +38,26 @@ function App() {
       if (initializing) {
         setInitializing(false);
       }
-      changeView();
+      if (!user) {
+        // navigate("/login");
+      } else {
+        // navigate("/home");
+      }
     })
   );
 
   return (
     <div className="App">
-      {view === "Home" && <Home />}
+      <Routes>
+        <Route path="/home" element={<Home profile={user} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/WorldNews" element={<WorldNews />} />
+        <Route path="/Profile" element={<Profile profile={user} />} />
+      </Routes>
+      {/* {view === "Home" && <Home dataUser={user} />}
       {view === "Login" && <Login />}
-      {view === "Blog" && <Blog />}
+      {view === "Blog" && <Blog />} */}
     </div>
   );
 }

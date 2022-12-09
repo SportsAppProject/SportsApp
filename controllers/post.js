@@ -60,7 +60,7 @@ module.exports = {
         if (err) res.status(500).send(err);
         else res.json(results);
       },
-      req.body.likes,
+      req.body.like,
       req.params.id
     );
   },
@@ -70,5 +70,5 @@ module.exports = {
       if (err) res.status(500).send(err);
       else res.json(results);
     });
-  }
+  },
 };

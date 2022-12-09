@@ -8,6 +8,7 @@ import {
 } from "mdb-react-ui-kit";
 import axios from "axios";
 import options from "./API";
+import Navbar from "../NavBar/Navbar.jsx";
 
 const Blog = () => {
   const [data, setData] = useState([]);
@@ -25,7 +26,9 @@ const Blog = () => {
   };
   useEffect(() => fetch(), []);
 
+  <Navbar />;
   return data.map((e) => {
+    <Navbar />;
     return (
       <div>
         <MDBContainer className="py-5">
