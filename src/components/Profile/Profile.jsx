@@ -3,12 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Profile({ profile }) {
-  const [check, setCheck] = useState(false);
-  const [show, setShow] = useState();
-
-  // var buttonText = show ? "Hide Component" : "Show Component";
-
-  console.log(profile);
+  console.log("----//////------> here the profile ", profile);
 
   const email = profile.email;
   const indexOfAt = email.indexOf("@");
@@ -58,15 +53,13 @@ export default function Profile({ profile }) {
       })
       .then(() => {
         console.log("yeeyyy updated");
-        // window.location.reload();
+        window.location.reload();
       });
   };
 
   return (
     <>
-      <div>
-        <b> Your Profile</b>{" "}
-      </div>
+      <div>Profile</div>
       <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
           <div class="col-md-3 border-right">

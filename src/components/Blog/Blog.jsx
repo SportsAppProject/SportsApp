@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddBlog from "../AddBlog/AddBlog.jsx";
 import Comment from "../Comment/Comment.jsx";
+import MyVerticallyCenteredModal from "../Blog/ButtonShow.jsx";
 
 import {
   MDBBtn,
@@ -21,7 +22,10 @@ let Blog = (props) => {
   let [comment, setComment] = useState("");
   let [check, setCheck] = useState(false);
   let [commentsdata, setCommentsdata] = useState([]);
-  let [viewComment, setViewComment] = useState(false);
+
+  const [modalShow, setModalShow] = React.useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const [comments, setComments] = useState([]);
 
   // function reverseit() {
   //   var arr = [];
@@ -74,11 +78,17 @@ let Blog = (props) => {
     axios
       .get(`http://localhost:5000/api/comments/getCommentOnePost/${idpost}`)
       .then((res) => {
-        setCommentsdata(res.data);
-        setView("Comment");
+        setComments(res.data);
         console.log(res.data);
       });
   };
+
+
+
+
+
+
+
 
   let DeletePoste = (idpost) => {
     axios.delete(`http://localhost:5000/api/posts/del/${idpost}`).then(() => {
@@ -200,6 +210,7 @@ let Blog = (props) => {
                         <span
                           onClick={() => {
                             getComments(element.idpost);
+                            setModalShow(true);
                           }}
                         >
                           Comment{" "}
@@ -270,6 +281,15 @@ let Blog = (props) => {
           );
         })}
       </div>
+      <>
+        {/* <Button variant="primary">See Comments</Button> */}
+
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          comments={comments}
+        />
+      </>
       <div> {view === "Add" && <AddBlog />}</div>
       <div></div>
     </div>
