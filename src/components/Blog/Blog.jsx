@@ -80,7 +80,12 @@ let Blog = (props) => {
       });
   };
 
-  let append = () => {};
+  let DeletePoste = (idpost) => {
+    axios.delete(`http://localhost:5000/api/posts/del/${idpost}`).then(() => {
+      console.log("deleted");
+      window.location.reload(false);
+    });
+  };
 
   return (
     <div>
@@ -107,6 +112,23 @@ let Blog = (props) => {
                         </a>
                         <div>
                           <a href="#!" className="text-dark mb-0">
+                            {/* <div>
+                              <select id="list">
+                                <option> ... </option>
+                                <button
+                                  className="list-group"
+                                  onClick={() => {
+                                    console.log("clikedd");
+                                  }}
+                                >
+                                  Delete Post
+                                </button>
+                                <option className="list-group">
+                                  Update Post
+                                </option>
+                              </select>
+                            </div> */}
+                            <button id="list">del </button>
                             <strong>{element.username} </strong>
                           </a>
                           <a
@@ -116,7 +138,7 @@ let Blog = (props) => {
                           >
                             <small>{element.postedat}</small> <br />
                             <small className="text-muted">
-                              {element.categorie}
+                              {element.category}
                             </small>
                           </a>
                         </div>
@@ -228,13 +250,16 @@ let Blog = (props) => {
                         <div>
                           <div className="bg-light rounded-3 px-3 py-1">
                             <a href="#!" className="text-dark mb-0">
-                              <strong>Malcolm Dosh</strong>
+                              <strong>
+                                Malcolm Dosh 
+                              </strong>
                             </a>
                             <a href="#!" className="text-muted d-block"></a>
                           </div>
 
                           <small> {element.commentcontent} </small>
-                        </div> // 
+                        </div>
+                        //
                       </div> */}
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>

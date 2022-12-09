@@ -29,18 +29,25 @@ module.exports = {
     });
   },
 
-  getNumber : function (callback, idpost) {
+  getNumber: function (callback, idpost) {
     const sql = `select count(idcomment) as number from comment where post_idpost="${idpost}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   },
 
-  getCommentOnePost : function(callback,idpost) {
-    const sql=`select * from comment where post_idpost="${idpost}"`
+  getCommentOnePost: function (callback, idpost) {
+    const sql = `select * from comment where post_idpost="${idpost}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
-  }
+  },
 
+  putlCommentike: function (callback, likes, idcomment) {
+    // const sql =  `UPDATE post INNER JOIN user ON post.user_iduser = user.iduser SET post.like = '${likes}' where id  `
+    const sql = `UPDATE post SET likes = '${likes}' WHERE idcomment ="${idcomment}"`;
+    connection.query(sql, function (error, results) {
+      callback(error, results);
+    });
+  },
 };

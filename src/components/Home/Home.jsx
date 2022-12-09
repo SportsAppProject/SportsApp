@@ -39,13 +39,13 @@ const Home = ({ dataUser }) => {
           <button onClick={toggleCheck}>Show profile</button>
         </div>
         <div>
-          {/* {check ? (
+          {check ? (
             <div>
               <Profile profile={profile} />
             </div>
-          ) : null} */}
+          ) : null}
         </div>
-        <Profile profile={profile} />
+        {/* <Profile profile={profile} /> */}
         <Blog post={post} comment={comment} />
       </div>
     </div>

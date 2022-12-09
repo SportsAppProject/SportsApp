@@ -27,7 +27,7 @@ module.exports = {
       req.body.posttitle,
       req.body.postcontent,
       req.body.postimage,
-      req.body.categorie,
+      req.body.category,
       req.body.user_iduser,
       0
     );
