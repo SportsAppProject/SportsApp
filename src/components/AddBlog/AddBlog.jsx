@@ -48,7 +48,7 @@ let AddBlog = (props) => {
         posttitle: title,
         postcontent: content,
         postimage: image,
-        categorie: select,
+        category: select,
         user_iduser: 1, //  logicly the connected personne
         like: 0,
       })

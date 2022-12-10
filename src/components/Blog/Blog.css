@@ -90,3 +90,55 @@
 #comment:hover {
     background: #2c52ed;
 }
+
+#list {
+    background-color: #ebebeb;
+    /* Green */
+    border: none;
+    color: rgb(7, 7, 7);
+    font-weight: bold;
+    padding: 6px 20px;
+    border-radius: 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    left: 340px;
+    width: 80px;
+    font-size: 16px;
+}
+
+#list1 {
+    background-color: #ebebeb;
+    /* Green */
+    border: none;
+    color: rgb(7, 7, 7);
+    font-weight: bold;
+    padding: 6px 20px;
+    border-radius: 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    left: 350px;
+    width: 80px;
+    font-size: 16px;
+}
+
+#allcomments{
+
+background-color: #ebebeb;
+    color: rgb(7, 7, 7);
+    font-weight: bold;
+    padding: 6px 20px;
+    border-radius: 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    left: 430px;
+    width: 80px;
+    font-size: 16px;
+
+
+}

@@ -4,6 +4,10 @@ import { getAuth, signOut } from "firebase/auth";
 import OurNavbar from "../NavBar/Navbar.jsx";
 import Profile from "../Profile/Profile.jsx";
 import axios from "axios";
+import Slider from "../Slider/Slider.jsx";
+import Banner from "../Slider/Banner.jsx";
+import Team from "../Team/Team";
+import Footer from "../Footer/Footer.jsx";
 
 const Home = ({ dataUser }) => {
   // console.log("------->",dataUser)
@@ -35,18 +39,18 @@ const Home = ({ dataUser }) => {
       <div>
         {/* <!--Navbar --> */}
         <OurNavbar />
-        {/* <div className="component-container">
-          <button onClick={toggleCheck}>Show profile</button>
-        </div> */}
         <div>
-          {/* {check ? (
-            <div>
-              <Profile profile={profile} />
-            </div>
-          ) : null} */}
+          <Slider />
+          <div>
+            <Banner />
+          </div>
+          <div>
+            <Team />
+          </div>
         </div>
-        {/* <Profile profile={profile} /> */}
-        {/* <Blog post={post} comment={comment} /> */}
+        <div>
+          <Footer />
+        </div>
       </div>
     </div>
   );

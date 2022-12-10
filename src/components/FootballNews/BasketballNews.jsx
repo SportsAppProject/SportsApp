@@ -13,13 +13,15 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 
-let FootballNews = () => {
+let BasketballNews = () => {
   let [filtredDataByCategory, setfiltredDataByCategory] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/posts/get/Football`).then((result) => {
-      setfiltredDataByCategory(result.data);
-    });
+    axios
+      .get(`http://localhost:5000/api/posts/get/basketball`)
+      .then((result) => {
+        setfiltredDataByCategory(result.data);
+      });
   }, []);
 
   console.log(filtredDataByCategory);
@@ -136,6 +138,27 @@ let FootballNews = () => {
                         <button id="comment">comment</button>
                       </div>
                     </div>
+
+                    {/* <div className="d-flex mb-3">
+                        <a href="#!">
+                          <img
+                            src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+                            className="border rounded-circle me-2"
+                            alt="Avatar"
+                            style={{ height: "40px" }}
+                          />
+                        </a>
+                        <div>
+                          <div className="bg-light rounded-3 px-3 py-1">
+                            <a href="#!" className="text-dark mb-0">
+                              <strong>Malcolm Dosh</strong>
+                            </a>
+                            <a href="#!" className="text-muted d-block"></a>
+                          </div>
+
+                          <small> {element.commentcontent} </small>
+                        </div> // 
+                      </div> */}
                     <div className="d-flex mb-3"></div>
                   </MDBCardBody>
                 </MDBCard>
@@ -148,4 +171,4 @@ let FootballNews = () => {
   );
 };
 
-export default FootballNews;
+export default BasketballNews;

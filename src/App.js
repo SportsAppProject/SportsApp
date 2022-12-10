@@ -11,7 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import WorldNews from "./components/WorldNews/WorldNews.jsx";
-
+import FootballNews from "./components/FootballNews/FootballNews.jsx";
+import BasketballNews from "./components/FootballNews/BasketballNews.jsx";
+import TennisNews from "./components/FootballNews/TennisNews.jsx";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
@@ -51,9 +53,13 @@ function App() {
       <Routes>
         <Route path="/home" element={<Home profile={user} />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/WorldNews" element={<WorldNews />} />
         <Route path="/Profile" element={<Profile profile={user} />} />
+        <Route path="/Football" element={<FootballNews />} />
+        <Route path="/Basketball" element={<BasketballNews />} />
+        <Route path="/Tennis" element={<TennisNews />} />
       </Routes>
       {/* {view === "Home" && <Home dataUser={user} />}
       {view === "Login" && <Login />}

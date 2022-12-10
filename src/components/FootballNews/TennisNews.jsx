@@ -13,11 +13,11 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 
-let FootballNews = () => {
+let TennisNews = () => {
   let [filtredDataByCategory, setfiltredDataByCategory] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/posts/get/Football`).then((result) => {
+    axios.get(`http://localhost:5000/api/posts/get/Tennis`).then((result) => {
       setfiltredDataByCategory(result.data);
     });
   }, []);
@@ -148,4 +148,4 @@ let FootballNews = () => {
   );
 };
 
-export default FootballNews;
+export default TennisNews;

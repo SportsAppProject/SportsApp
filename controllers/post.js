@@ -13,7 +13,7 @@ module.exports = {
     posts.getOne(function (err, results) {
       if (err) res.status(500).send(err);
       else res.json(results);
-    }, req.params.categorie);
+    }, req.params.category);
   },
   //method to add a post to the database via the respective model function.
 
@@ -27,7 +27,7 @@ module.exports = {
       req.body.posttitle,
       req.body.postcontent,
       req.body.postimage,
-      req.body.categorie,
+      req.body.category,
       req.body.user_iduser,
       0
     );
@@ -49,7 +49,7 @@ module.exports = {
       req.body.posttitle,
       req.body.postcontent,
       req.body.postimage,
-      req.body.categorie,
+      req.body.category,
       req.params.id
     );
   },

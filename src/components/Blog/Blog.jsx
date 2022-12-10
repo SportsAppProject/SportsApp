@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import AddBlog from "../AddBlog/AddBlog.jsx";
 import Comment from "../Comment/Comment.jsx";
 import Navbar from "../NavBar/Navbar.jsx";
+import Button from "react-bootstrap/Button";
+import SeeCommentBlog from "./SeeCommentBlog.jsx";
 
 import {
   MDBBtn,
@@ -20,13 +22,11 @@ let Blog = (props) => {
   let [number_like, setlike] = useState(0);
   let [view, setView] = useState("Blog");
   let [commentsdata, setCommentsdata] = useState([]);
-  let [viewComment, setViewComment] = useState(false);
-  let [post, setPost] = useState([]);
   let [comment, setComment] = useState([]);
-  let [check, setCheck] = useState(false);
+  let [post, setPost] = useState([]);
+  const [modalShow, setModalShow] = React.useState(false);
 
   let updatelike = (number_like, id) => {
-    // e.preventDefault();
     axios
       .put(`http://localhost:5000/api/posts/updatelike/${id}`, {
         like: number_like + 1,
@@ -74,9 +74,6 @@ let Blog = (props) => {
       setComment(result.data);
     });
   }, []);
-  const toggleCheck = () => {
-    setCheck(!check);
-  };
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/posts/getall").then((result) => {
@@ -84,6 +81,30 @@ let Blog = (props) => {
       setPost(result.data);
     });
   }, []);
+
+  let DeletePoste = (idpost) => {
+    axios.delete(`http://localhost:5000/api/posts/del/${idpost}`).then(() => {
+      console.log("deleted");
+      window.location.reload(false);
+    });
+  };
+
+  // let UpdatePoste = (idpost, newname) => {
+  //   axios
+  //     .put(`http://localhost:5000/api/posts/del/${idpost}`, {
+  //       posttitle: newname,
+  //       postcontent: img,
+  //       postimage: img,
+  //       category: img,
+  //     })
+  //     .then(() => {
+  //       console.log("updated");
+  //       window.location.reload(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div>
@@ -109,10 +130,22 @@ let Blog = (props) => {
                             style={{ height: "40px" }}
                           />
                         </a>
+
                         <div>
                           <a href="#!" className="text-dark mb-0">
                             <strong>{element.username} </strong>
                           </a>
+                          <button
+                            onClick={() => {
+                              DeletePoste(element.idpost);
+                            }}
+                            id="list"
+                          >
+                            {" "}
+                            🗑️{" "}
+                          </button>
+                          <button id="list1"> ⚙️ </button>
+
                           <a
                             href="#!"
                             className="text-muted d-block"
@@ -120,7 +153,7 @@ let Blog = (props) => {
                           >
                             <small>{element.postedat}</small> <br />
                             <small className="text-muted">
-                              {element.categorie}
+                              {element.category}
                             </small>
                           </a>
                         </div>
@@ -182,9 +215,10 @@ let Blog = (props) => {
                         <span
                           onClick={() => {
                             getComments(element.idpost);
+                            setModalShow(true);
                           }}
                         >
-                          Comment{" "}
+                          Show all Comments
                         </span>
                         <MDBBtn size="lg" rippleColor="dark" color="link">
                           {/* <MDBIcon fas icon="share" className="me-2" /> Share */}
@@ -251,35 +285,15 @@ let Blog = (props) => {
       </div>
       <div> {view === "Add" && <AddBlog />}</div>
       <div></div>
+      <>
+        <SeeCommentBlog
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          comments={commentsdata}
+        />
+      </>
     </div>
   );
 };
 
 export default Blog;
-
-// {
-//   props.comment.map((element, index) => {
-//     return (
-//      <div className="d-flex mb-3">
-//                         <a href="#!">
-//                           <img
-//                             src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-//                             className="border rounded-circle me-2"
-//                             alt="Avatar"
-//                             style={{ height: "40px" }}
-//                           />
-//                         </a>
-//                         <div>
-//                           <div className="bg-light rounded-3 px-3 py-1">
-//                             <a href="#!" className="text-dark mb-0">
-//                               <strong>Malcolm Dosh</strong>
-//                             </a>
-//                             <a href="#!" className="text-muted d-block"></a>
-//                           </div>
-
-//                           <small> {element.commentcontent} </small>
-//                         </div> //
-//                       </div>
-//     );
-//   });
-// }
