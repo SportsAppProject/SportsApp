@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 
 
 export default function SeeCommentBlog(props) {
-  console.log(props.comments);
+  console.log(props.iduser);
 
 
   const likeComment=(idcomment)=>{
@@ -41,7 +41,7 @@ return (
         return (
           <>
             <Modal.Body>
-            <button 
+            {e.user_iduser===props.iduser?<button 
                             onClick={() => {
                               deleteThisComment(e.idcomment);
                             }}
@@ -49,7 +49,7 @@ return (
                           >
                             {" "}
                             🗑️{" "}
-                          </button>
+                          </button>:null}
 
 
               <h4>{e.username}</h4>
