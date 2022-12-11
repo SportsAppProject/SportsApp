@@ -46,6 +46,7 @@ module.exports = {
         if (err) res.status(500).send(err);
         else res.json(results);
       },
+      req.body.postedat,
       req.body.posttitle,
       req.body.postcontent,
       req.body.postimage,

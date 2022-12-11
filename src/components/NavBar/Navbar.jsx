@@ -80,7 +80,7 @@ function OurNavbar(props) {
         <MDBContainer fluid style={{ backgroundColor: "#77DD77" }}>
           <MDBNavbarBrand href="#">
             <img
-              src="https://toppng.com/public/uploads/preview/silhouette-football-player-shooting-soccer-player-silhouette-11563236530t8inyn0tfx.png"
+              src="https://i.ibb.co/d4qS7fY/clipart2274341.png"
               alt="..."
               height="36"
             />

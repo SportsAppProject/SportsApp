@@ -89,23 +89,6 @@ let Blog = (props) => {
     });
   };
 
-  // let UpdatePoste = (idpost, newname) => {
-  //   axios
-  //     .put(`http://localhost:5000/api/posts/del/${idpost}`, {
-  //       posttitle: newname,
-  //       postcontent: img,
-  //       postimage: img,
-  //       category: img,
-  //     })
-  //     .then(() => {
-  //       console.log("updated");
-  //       window.location.reload(false);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   return (
     <div>
       <Navbar />
@@ -144,7 +127,14 @@ let Blog = (props) => {
                             {" "}
                             🗑️{" "}
                           </button>
-                          <button id="list1"> ⚙️ </button>
+                          <button
+                            onClick={() => {
+                              props.selectBlog(element.idpost);
+                            }}
+                            id="list1"
+                          >
+                            ⚙️{" "}
+                          </button>
 
                           <a
                             href="#!"
@@ -220,9 +210,6 @@ let Blog = (props) => {
                         >
                           Show all Comments
                         </span>
-                        <MDBBtn size="lg" rippleColor="dark" color="link">
-                          {/* <MDBIcon fas icon="share" className="me-2" /> Share */}
-                        </MDBBtn>
                       </div>
                       <div className="d-flex mb-3">
                         <a href="#!">
@@ -254,26 +241,6 @@ let Blog = (props) => {
                         </div>
                       </div>
 
-                      {/* <div className="d-flex mb-3">
-                        <a href="#!">
-                          <img
-                            src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-                            className="border rounded-circle me-2"
-                            alt="Avatar"
-                            style={{ height: "40px" }}
-                          />
-                        </a>
-                        <div>
-                          <div className="bg-light rounded-3 px-3 py-1">
-                            <a href="#!" className="text-dark mb-0">
-                              <strong>Malcolm Dosh</strong>
-                            </a>
-                            <a href="#!" className="text-muted d-block"></a>
-                          </div>
-
-                          <small> {element.commentcontent} </small>
-                        </div> // 
-                      </div> */}
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>
                   </MDBCard>

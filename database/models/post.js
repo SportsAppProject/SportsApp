@@ -15,7 +15,7 @@ module.exports = {
 
   getOne: function (callback, category) {
     // const sql = `SELECT * FROM post WHERE category="${category}"`;
-    const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.category="${category}"`
+    const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.category="${category}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -46,13 +46,14 @@ module.exports = {
 
   putpost: function (
     callback,
+    postedat,
     posttitle,
     postcontent,
     postimage,
     category,
     idpost
   ) {
-    const sql = `UPDATE post SET posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", category="${category}"  WHERE idpost ="${idpost}"`;
+    const sql = `UPDATE post SET postedat="${postedat}",posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", category="${category}"  WHERE idpost ="${idpost}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
