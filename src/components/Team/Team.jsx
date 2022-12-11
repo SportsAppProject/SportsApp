@@ -8,7 +8,7 @@ const Team = () => {
         <div class="header1">
           <div class="title1">Our Expert Team</div>
           <p>
-            <small class="text-muted">SportApp Project</small>
+            <small class="text-muted">SocialSports Project</small>
           </p>
         </div>
         <div class="row justify-content-center pb-5">
@@ -79,8 +79,8 @@ const Team = () => {
                     {" "}
                     <small class="text-muted">
                       {" "}
-                      Rather than say “requirements”, say “deciding what to
-                      build”. The verb phrase works, the noun phrase doesn’t.{" "}
+                      Amazing teamwork, communication and goals. I'm blessed to
+                      have this team.{" "}
                     </small>{" "}
                   </p>
                 </div>

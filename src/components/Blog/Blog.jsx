@@ -32,7 +32,7 @@ let Blog = (props) => {
         like: number_like + 1,
       })
       .then(() => {
-        window.location.reload();
+        window.location.reload(false);
         console.log("like updated");
       })
       .catch((error) => {
@@ -85,7 +85,7 @@ let Blog = (props) => {
   let DeletePoste = (idpost) => {
     axios.delete(`http://localhost:5000/api/posts/del/${idpost}`).then(() => {
       console.log("deleted");
-      window.location.reload(false);
+      // window.location.reload(false);
     });
   };
 
@@ -93,7 +93,7 @@ let Blog = (props) => {
     <div>
       <Navbar />
       <div>
-        <AddBlog />
+        <AddBlog id={props.profile.uid} />
       </div>
 
       <div>

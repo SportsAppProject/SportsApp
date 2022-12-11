@@ -50,10 +50,10 @@ module.exports = {
     posttitle,
     postcontent,
     postimage,
-    category,
+    categorie,
     idpost
   ) {
-    const sql = `UPDATE post SET postedat="${postedat}",posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", categorie="${category}"  WHERE idpost ="${idpost}"`;
+    const sql = `UPDATE post SET postedat="${postedat}",posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", categorie="${categorie}"  WHERE idpost ="${idpost}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });

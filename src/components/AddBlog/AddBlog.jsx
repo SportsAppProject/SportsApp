@@ -5,6 +5,7 @@ import axios from "axios";
 import "./AddBlog.css";
 
 let AddBlog = (props) => {
+  console.log("l id mel addblog", props.id);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
@@ -54,7 +55,7 @@ let AddBlog = (props) => {
         postcontent: content,
         postimage: url,
         category: select,
-        user_iduser: 1, //  logicly the connected personne
+        user_iduser: props.id, //  logicly the connected personne
         like: 0,
       })
 
@@ -142,7 +143,7 @@ let AddBlog = (props) => {
             <button
               onClick={(e) => {
                 addPost(e);
-                navigate("/Blog");
+                navigate("/blog");
               }}
             >
               Save

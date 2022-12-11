@@ -21,7 +21,7 @@ const auth = getAuth();
 
 function App() {
   const navigate = useNavigate();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("");
   const [initializing, setInitializing] = useState(true);
   const [view, setView] = useState("Login");
   const [update, setUpdate] = React.useState([]);
@@ -61,7 +61,10 @@ function App() {
         <Route path="/home" element={<Home profile={user} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Login />} />
-        <Route path="/blog" element={<Blog selectBlog={selectBlog} />} />
+        <Route
+          path="/blog"
+          element={<Blog selectBlog={selectBlog} profile={user} />}
+        />
         <Route path="/WorldNews" element={<WorldNews />} />
         <Route path="/Profile" element={<Profile profile={user} />} />
         <Route path="/Football" element={<FootballNews />} />
