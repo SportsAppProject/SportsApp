@@ -32,7 +32,7 @@ let Blog = (props) => {
         like: number_like + 1,
       })
       .then(() => {
-        window.location.reload();
+        window.location.reload(false);
         console.log("like updated");
       })
       .catch((error) => {
@@ -85,7 +85,7 @@ let Blog = (props) => {
   let DeletePoste = (idpost) => {
     axios.delete(`http://localhost:5000/api/posts/del/${idpost}`).then(() => {
       console.log("deleted");
-      window.location.reload(false);
+      // window.location.reload(false);
     });
   };
 
@@ -93,7 +93,7 @@ let Blog = (props) => {
     <div>
       <Navbar />
       <div>
-        <AddBlog />
+        <AddBlog id={props.profile.uid} />
       </div>
 
       <div>
@@ -105,14 +105,12 @@ let Blog = (props) => {
                   <MDBCard style={{ maxWidth: "42rem" }}>
                     <MDBCardBody>
                       <div className="d-flex mb-3">
-                        <a href="#!">
-                          <img
-                            src={element.imageuser}
-                            className="border rounded-circle me-2"
-                            alt="Avatar"
-                            style={{ height: "40px" }}
-                          />
-                        </a>
+                        <img
+                          src={element.imageuser}
+                          className="border rounded-circle me-2"
+                          alt="Avatar"
+                          style={{ height: "40px" }}
+                        />
 
                         <div>
                           <a href="#!" className="text-dark mb-0">

@@ -84,7 +84,7 @@ function OurNavbar(props) {
               alt="..."
               height="36"
             />
-            SportApp
+            SocialSports
           </MDBNavbarBrand>
 
           <MDBNavbarToggler

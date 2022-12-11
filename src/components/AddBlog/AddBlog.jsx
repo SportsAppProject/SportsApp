@@ -5,14 +5,15 @@ import axios from "axios";
 import "./AddBlog.css";
 
 let AddBlog = (props) => {
+  console.log("l id mel addblog", props.id);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
   const [select, setSelect] = useState("");
   const [data, setData] = useState([]);
 
-  const [file, setFile] = useState(null);   
-  const [url, setUrl] = useState(""); 
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
 
@@ -49,12 +50,12 @@ let AddBlog = (props) => {
     e.preventDefault();
     axios
       .post("http://localhost:5000/api/posts/add", {
-        postedat: "Posted At : " + posted_at,
+        postedat: "Posted on : " + posted_at,
         posttitle: title,
         postcontent: content,
         postimage: url,
         category: select,
-        user_iduser: 1, //  logicly the connected personne
+        user_iduser: props.id, //  logicly the connected personne
         like: 0,
       })
 
@@ -142,7 +143,7 @@ let AddBlog = (props) => {
             <button
               onClick={(e) => {
                 addPost(e);
-                navigate("/Blog");
+                navigate("/blog");
               }}
             >
               Save
