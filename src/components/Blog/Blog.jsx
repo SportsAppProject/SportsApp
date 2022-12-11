@@ -105,14 +105,12 @@ let Blog = (props) => {
                   <MDBCard style={{ maxWidth: "42rem" }}>
                     <MDBCardBody>
                       <div className="d-flex mb-3">
-                        <a href="#!">
-                          <img
-                            src={element.imageuser}
-                            className="border rounded-circle me-2"
-                            alt="Avatar"
-                            style={{ height: "40px" }}
-                          />
-                        </a>
+                        <img
+                          src={element.imageuser}
+                          className="border rounded-circle me-2"
+                          alt="Avatar"
+                          style={{ height: "40px" }}
+                        />
 
                         <div>
                           <a href="#!" className="text-dark mb-0">

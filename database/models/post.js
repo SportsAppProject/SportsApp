@@ -15,7 +15,7 @@ module.exports = {
 
   getOne: function (callback, category) {
     // const sql = `SELECT * FROM post WHERE category="${category}"`;
-    const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.category="${category}"`;
+    const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.categorie="${category}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -27,11 +27,11 @@ module.exports = {
     posttitle,
     postcontent,
     postimage,
-    category,
+    categorie,
     user_iduser,
     like
   ) {
-    const sql = `INSERT INTO post (postedat,posttitle,postcontent,postimage,category,user_iduser ) VALUES("${postedat}","${posttitle}", "${postcontent}","${postimage}","${category}","${user_iduser}" )`;
+    const sql = `INSERT INTO post (postedat,posttitle,postcontent,postimage,categorie,user_iduser ) VALUES("${postedat}","${posttitle}", "${postcontent}","${postimage}","${categorie}","${user_iduser}" )`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -53,7 +53,7 @@ module.exports = {
     category,
     idpost
   ) {
-    const sql = `UPDATE post SET postedat="${postedat}",posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", category="${category}"  WHERE idpost ="${idpost}"`;
+    const sql = `UPDATE post SET postedat="${postedat}",posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", categorie="${category}"  WHERE idpost ="${idpost}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });

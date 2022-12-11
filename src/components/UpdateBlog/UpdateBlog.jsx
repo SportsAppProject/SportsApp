@@ -52,7 +52,7 @@ let UpdateBlog = (props) => {
         posttitle: newPostTitle,
         postcontent: newPostContent,
         postimage: url,
-        category: newCategory,
+        categorie: newCategory,
       })
       .then(() => {
         console.log("updated");
