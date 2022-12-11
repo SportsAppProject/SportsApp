@@ -32,10 +32,10 @@ module.exports = {
     });
   },
 
-  getMyInfo: function (callback, iduser) {
-    const sql = `SELECT * FROM user WHERE iduser="${iduser}"`;
-    connection.query(sql, (err, response) => {
-      callback(err, response);
-    });
-  },
+  getMyInfo: function (callback,iduser){
+    const sql =`SELECT * FROM user WHERE iduser="${iduser}"`
+    connection.query(sql,(err,response)=>{
+      callback(err,response)
+    })
+  }
 };

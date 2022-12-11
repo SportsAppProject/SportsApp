@@ -1,9 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../NavBar/Navbar.jsx";
+import "./Profile.css";
 
 export default function Profile({ profile }) {
-  console.log("----//////------> here the profile ", profile);
+  const [check, setCheck] = useState(false);
+  const [show, setShow] = useState();
+
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
+
+  // var buttonText = show ? "Hide Component" : "Show Component";
+
+  console.log(profile);
 
   const email = profile.email;
   const indexOfAt = email.indexOf("@");
@@ -17,11 +28,13 @@ export default function Profile({ profile }) {
   const [iduser2, setIdUser2] = useState(profile.uid);
   const [email2, setEmail2] = useState(email);
   const [username2, setUsername] = useState(defaultName);
+  const [submit, setSubmit] = useState(false);
 
   const [bio2, setBio2] = useState("no bio here");
   const [categorie2, setCategoie2] = useState("no categorie selected");
   const [image2, setImage2] = useState("https://i.stack.imgur.com/l60Hf.png");
   const [gender2, setGender2] = useState("no gender specified");
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -49,17 +62,39 @@ export default function Profile({ profile }) {
         bio: bio2,
         gender: gender2,
         categorie: categorie2,
-        imageuser: image2,
+        imageuser: url,
       })
       .then(() => {
+        setSubmit(true);
         console.log("yeeyyy updated");
-        window.location.reload();
+        // window.location.reload();
+      });
+  };
+
+  // ddvyi3jpk
+  //ahmedmejdoub
+
+  let uplodImage = async () => {
+    const form = new FormData();
+    form.append("file", file); // file is a varaible contain the picture
+    form.append("upload_preset", "ahmedmejdoub");
+    await axios
+      .post("https://api.cloudinary.com/v1_1/ddvyi3jpk/upload", form) // send the form to cloudinary
+      .then((result) => {
+        console.log(result.data.secure_url); // get the url of the image
+        setUrl(result.data.secure_url);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   return (
     <>
-      <div>Profile</div>
+      <Navbar />
+      <div>
+        <b> Your Profile</b>{" "}
+      </div>
       <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
           <div class="col-md-3 border-right">
@@ -130,15 +165,35 @@ export default function Profile({ profile }) {
                     onChange={(e) => setImage2(e.target.value)}
                   />
                 </div>
+
+                <div>
+                  <input
+                    className="upload"
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </div>
               </div>
+              <button className="button-3-profile" onClick={uplodImage}>
+                Upload Image
+              </button>
+              <div></div>
               <div class="mt-5 text-center">
                 <button
                   type="button"
                   class="btn btn-success"
-                  onClick={() => updateUser()}
+                  onClick={updateUser}
+                  // onClick={(updateUser(), navigate("/home"))}
                 >
                   Save changes
                 </button>
+                <div>
+                  {submit ? (
+                    <div class="alert alert-success">
+                      <strong>Success!</strong> You have added a profile
+                    </div>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

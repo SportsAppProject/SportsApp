@@ -3,6 +3,7 @@ import { getAuth, signOut } from "firebase/auth";
 import axios from "axios";
 import Search from "../search/Search.jsx";
 import Profile from "../Profile/Profile.jsx";
+import { useNavigate } from "react-router-dom";
 
 import {
   MDBContainer,
@@ -25,29 +26,34 @@ import { Button } from "react-bootstrap";
 import WorldNews from "../WorldNews/WorldNews.jsx";
 import FootballNews from "../FootballNews/FootballNews.jsx";
 import "./Navbar.css";
+
 function OurNavbar(props) {
+  const navigate = useNavigate();
   const [view, setView] = useState("Home");
   const [showBasic, setShowBasic] = useState(false);
-  const [footballNews, setFootballNews] = useState([]);
+
   const [searched, setSearched] = useState("");
   const [searchedData, setSearchedData] = useState([]);
   const [check, setCheck] = useState(false);
 
-  useEffect(() => {
-    async function getResults() {
-      const results = await axios(
-        "http://localhost:5000/api/posts/getFootballNews"
-      );
-      setFootballNews(results.data);
-    }
-    getResults();
-  }, []);
+  // useEffect(() => {
+  //   async function getResults() {
+  //     const results = await axios(
+  //       "http://localhost:5000/api/posts/getFootballNews"
+  //     );
+  //     setFootballNews(results.data);
+  //   }
+  //   getResults();
+  // }, []);
 
   const disconnect = () => {
     const auth = getAuth();
     signOut(auth)
       .then((res) => {
         console.log(res);
+        if (res === undefined) {
+          navigate("/login");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -74,11 +80,11 @@ function OurNavbar(props) {
         <MDBContainer fluid style={{ backgroundColor: "#77DD77" }}>
           <MDBNavbarBrand href="#">
             <img
-              src="https://toppng.com/public/uploads/preview/silhouette-football-player-shooting-soccer-player-silhouette-11563236530t8inyn0tfx.png"
+              src="https://i.ibb.co/d4qS7fY/clipart2274341.png"
               alt="..."
               height="36"
             />
-            SportApp
+            SocialSports
           </MDBNavbarBrand>
 
           <MDBNavbarToggler
@@ -97,20 +103,26 @@ function OurNavbar(props) {
                   active
                   aria-current="page"
                   href="#"
-                  onClick={() => setView("Home")}
+                  onClick={() => navigate("/home")}
                 >
                   <div>Home</div>
                 </MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>
-                <MDBNavbarLink onClick={() => setView("Profile")} href="#">
+                <MDBNavbarLink onClick={() => navigate("/Profile")}>
                   Profile
                 </MDBNavbarLink>
               </MDBNavbarItem>
 
               <MDBNavbarItem>
-                <MDBNavbarLink onClick={() => setView("WorldNews")} href="#">
+                <MDBNavbarLink onClick={() => navigate("/Blog")}>
+                  Blog
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <MDBNavbarLink onClick={() => navigate("/worldnews")}>
                   World News
                 </MDBNavbarLink>
               </MDBNavbarItem>
@@ -121,11 +133,18 @@ function OurNavbar(props) {
                     Categories
                   </MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem link onClick={() => setView("football")}>
+                    <MDBDropdownItem link onClick={() => navigate("/Football")}>
                       FootBall
                     </MDBDropdownItem>
-                    <MDBDropdownItem link>Tennis</MDBDropdownItem>
-                    <MDBDropdownItem link>Basketball</MDBDropdownItem>
+                    <MDBDropdownItem link onClick={() => navigate("/Tennis")}>
+                      Tennis
+                    </MDBDropdownItem>
+                    <MDBDropdownItem
+                      link
+                      onClick={() => navigate("/Basketball")}
+                    >
+                      Basketball
+                    </MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavbarItem>
@@ -166,9 +185,6 @@ function OurNavbar(props) {
           </MDBNavbarItem>
         </MDBContainer>
       </MDBNavbar>
-      {view === "football" && <FootballNews data={footballNews} />}
-      {view === "WorldNews" && <WorldNews />}
-      {view === "Profile" && <Profile />}
       {view === "Search" && <Search serchedData={fill()} />}
     </div>
   );

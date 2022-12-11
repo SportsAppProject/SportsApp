@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Home from "../Home/Home";
 import ClipLoader from "react-spinners/ClipLoader";
+import "./Login.css";
 
 import { initializeApp } from "firebase/app";
 import {
@@ -12,6 +13,7 @@ import {
 } from "firebase/auth";
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA05fVHSqrQW08aW81v77i8eC6U0TU4E88",
@@ -28,6 +30,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [passw, setPassw] = useState("");
   const [dataInput, setDataInput] = useState("");
@@ -69,7 +72,7 @@ const Login = () => {
         console.log("######## ", Credential.user.uid);
         console.log("######## ", Credential.user.email);
         insertUser(Credential.user.uid, Credential.user.email); // CALLING THE FUNCTION OF INSERTING USER INTO DATABASE
-        return <Home />;
+        navigate("/home");
       })
       .catch((err) => {
         setLoading(false);
@@ -81,7 +84,10 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, passw)
-      .then((res) => console.log("User LoggedIn", res.user))
+      .then((res) => {
+        console.log("User LoggedIn", res.user);
+        navigate("/home");
+      })
       .then((err) => {
         setLoading(false);
         setError(true);
@@ -94,26 +100,15 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className="Backkkground">
       {/* <!--Navbar --> */}
-      <nav
-        className="nav-box"
-        style={{ backgroundColor: "#77DD77", borderColor: "#77DD77" }}
-      >
-        <h1
-          className="welcome-banner"
-          style={{ color: "white", textAlign: "center" }}
-        >
-          Welcome to our App !
-        </h1>
-      </nav>
       {/* <!--/.Navbar --> */}
       <section className="vh-100">
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-8 col-lg-7 col-xl-6">
               <img
-                src="https://images.squarespace-cdn.com/content/v1/58a1fe895016e192bf28ff7f/1568646848366-IYI7DZMOFU5L7AMJ2CTC/Eco.png?format=1500w"
+                src="https://i.ibb.co/PGHJMK5/pngaaa-com-4051963.png"
                 className="img-fluid"
                 alt="x"
               />
@@ -128,7 +123,9 @@ const Login = () => {
                     className="form-control form-control-lg"
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <label className="form-label">Email address</label>
+                  <label className="form-label" style={{ color: "white" }}>
+                    Email address
+                  </label>
                   {error ? (
                     <p style={{ color: "red" }}>
                       Invalid Credentials: * Please make sure your password has
@@ -145,7 +142,9 @@ const Login = () => {
                     className="form-control form-control-lg"
                     onChange={(e) => setPassw(e.target.value)}
                   />
-                  <label className="form-label">Password</label>
+                  <label className="form-label" style={{ color: "white" }}>
+                    Password
+                  </label>
                 </div>
 
                 <div className="d-flex justify-content-around align-items-center mb-4">
@@ -175,32 +174,14 @@ const Login = () => {
                 <button
                   onClick={handleLogin}
                   className="btn btn-primary btn-lg btn-block"
-                  style={{ backgroundColor: "#77DD77", borderColor: "#77DD77" }}
+                  style={{
+                    backgroundColor: "#77DD77",
+                    borderColor: "#77DD77",
+                    margin: "5px",
+                  }}
                 >
                   Login
                 </button>
-
-                <div className="divider d-flex align-items-center my-4">
-                  <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                </div>
-
-                <a
-                  className="btn btn-primary btn-lg btn-block"
-                  style={{ backgroundColor: "#77DD77", borderColor: "#77DD77" }}
-                  href="#!"
-                  role="button"
-                >
-                  <i className="fab fa-facebook-f me-2"></i>Continue with
-                  Facebook
-                </a>
-                <a
-                  className="btn btn-primary btn-lg btn-block"
-                  style={{ backgroundColor: "#77DD77", borderColor: "#77DD77" }}
-                  href="#!"
-                  role="button"
-                >
-                  <i className="fab fa-twitter me-2"></i>Continue with Twitter
-                </a>
               </form>
             </div>
           </div>

@@ -4,22 +4,18 @@ const connection = require("../index");
 
 module.exports = {
   getAll: function (callback) {
-    const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser`;
+    const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser;`;
     // const sql = `SELECT *FROM post `;
-    // const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser INNER JOIN comment ON user.iduser = comment.idcomment`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
   },
 
-  // SELECT * FROM post INNER JOIN user ON post.user_iduser=user.iduser INNER JOIN comment ON post.comment_idcomment=idcomment
-
-  // "SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser INNER JOIN comment ON user.iduser = comment.idcomment" //
-
   // "SELECT * FROM post INNER JOIN user ON post.user_iduser1=user.iduser INNER JOIN comment ON post.comment_idcomment=idcomment"
 
-  getOne: function (callback, categorie) {
-    const sql = `SELECT * FROM post WHERE categorie="${categorie}"`;
+  getOne: function (callback, category) {
+    // const sql = `SELECT * FROM post WHERE category="${category}"`;
+    const sql = `SELECT * FROM post INNER JOIN user ON post.user_iduser = user.iduser WHERE post.category="${category}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -31,11 +27,11 @@ module.exports = {
     posttitle,
     postcontent,
     postimage,
-    categorie,
+    category,
     user_iduser,
     like
   ) {
-    const sql = `INSERT INTO post (postedat,posttitle,postcontent,postimage,categorie,user_iduser ) VALUES("${postedat}","${posttitle}", "${postcontent}","${postimage}","${categorie}","${user_iduser}" )`;
+    const sql = `INSERT INTO post (postedat,posttitle,postcontent,postimage,category,user_iduser ) VALUES("${postedat}","${posttitle}", "${postcontent}","${postimage}","${category}","${user_iduser}" )`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });
@@ -50,13 +46,14 @@ module.exports = {
 
   putpost: function (
     callback,
+    postedat,
     posttitle,
     postcontent,
     postimage,
-    categorie,
+    category,
     idpost
   ) {
-    const sql = `UPDATE post SET posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", categorie="${categorie}"  WHERE idpost ="${idpost}"`;
+    const sql = `UPDATE post SET postedat="${postedat}",posttitle ="${posttitle}", postcontent ="${postcontent}" ,postimage="${postimage}", category="${category}"  WHERE idpost ="${idpost}"`;
     connection.query(sql, function (error, results) {
       callback(error, results);
     });

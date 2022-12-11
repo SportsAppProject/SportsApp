@@ -1,24 +1,22 @@
-import React, { useState } from "react";
-import { MDBInputGroup } from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useState } from "react";
 import axios from "axios";
-import "./AddBlog.css";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../NavBar/Navbar.jsx";
+import "./UpdateBlog.css";
 
-let AddBlog = (props) => {
-  console.log("l id mel addblog", props.id);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [image, setImage] = useState("");
-  const [select, setSelect] = useState("");
-  const [data, setData] = useState([]);
+let UpdateBlog = (props) => {
+  console.log(props.update, "hethi mel updateblog");
+
+  let [newPostTitle, setNewPostTitle] = useState("");
+  let [newPostContent, setNewPostContent] = useState("");
+  let [newPostImage, setNewPostImage] = useState("");
+  let [newCategory, setNewCategory] = useState("");
 
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
-
-  // console.log(select);
-
   const month = [
     "January",
     "February",
@@ -35,7 +33,7 @@ let AddBlog = (props) => {
   ];
   let name = month[new Date().getMonth()];
 
-  let posted_at =
+  let updated_at =
     name +
     " " +
     new Date().getDate() +
@@ -46,27 +44,24 @@ let AddBlog = (props) => {
     ":" +
     new Date().getMinutes();
 
-  let addPost = (e) => {
-    e.preventDefault();
+  let UpdatePoste = () => {
+    const idpost = props.update;
     axios
-      .post("http://localhost:5000/api/posts/add", {
-        postedat: "Posted on : " + posted_at,
-        posttitle: title,
-        postcontent: content,
+      .put(`http://localhost:5000/api/posts/update/${idpost}`, {
+        postedat: "Updated At : " + updated_at,
+        posttitle: newPostTitle,
+        postcontent: newPostContent,
         postimage: url,
-        category: select,
-        user_iduser: props.id, //  logicly the connected personne
-        like: 0,
+        categorie: newCategory,
       })
-
       .then(() => {
+        console.log("updated");
         window.location.reload(false);
-        console.log("added");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
-
-  // ddvyi3jpk
-  //ahmedmejdoub
 
   let uplodImage = async () => {
     const form = new FormData();
@@ -82,28 +77,33 @@ let AddBlog = (props) => {
         console.log(err);
       });
   };
+
   return (
     <div>
+      <div>
+        <Navbar />
+      </div>
+
       <body>
-        <div class="wrapper">
+        <div class="wrapperA">
           <div class="title">
-            <h2>Add Post </h2>
+            <h2>Update Post </h2>
           </div>
           <div class="content">
             <p></p>
             <ul>
               <input
                 onChange={(event) => {
-                  setTitle(event.target.value);
+                  setNewPostTitle(event.target.value);
                 }}
                 type="text"
-                placeholder="Title"
+                placeholder="New Title"
               ></input>
             </ul>
             <ul>
               <input
                 onChange={(event) => {
-                  setContent(event.target.value);
+                  setNewPostContent(event.target.value);
                 }}
                 type="text"
                 placeholder="Content"
@@ -119,14 +119,14 @@ let AddBlog = (props) => {
               </div>
             </ul>
           </div>
-          <button className="button-3 " onClick={uplodImage}>
+          <button className="button-3" onClick={uplodImage}>
             Upload Image
           </button>
           <div>
             <select
-              class="wrapper1"
-              value={select}
-              onChange={(e) => setSelect(e.target.value)}
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              class="wrapperA1"
             >
               <option> --- </option>
               <option value="football"> football </option>
@@ -134,19 +134,17 @@ let AddBlog = (props) => {
               <option value="tennis"> tennis </option>
             </select>
           </div>
-
           <div class="details">
             <p>
-              <span> Choose the Categories </span>
+              <span> Choose The New Categories </span>
             </p>
-
             <button
-              onClick={(e) => {
-                addPost(e);
-                navigate("/blog");
+              onClick={() => {
+                UpdatePoste();
+                navigate("/Blog");
               }}
             >
-              Save
+              Update
             </button>
           </div>
         </div>
@@ -155,4 +153,4 @@ let AddBlog = (props) => {
   );
 };
 
-export default AddBlog;
+export default UpdateBlog;

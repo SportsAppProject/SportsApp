@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import AddBlog from "../AddBlog/AddBlog.jsx";
 import Comment from "../Comment/Comment.jsx";
-import MyVerticallyCenteredModal from "../Blog/ButtonShow.jsx";
+import Navbar from "../NavBar/Navbar.jsx";
+import Button from "react-bootstrap/Button";
+import SeeCommentBlog from "./SeeCommentBlog.jsx";
 
 import {
   MDBBtn,
@@ -19,36 +21,18 @@ import "./Blog.css";
 let Blog = (props) => {
   let [number_like, setlike] = useState(0);
   let [view, setView] = useState("Blog");
-  let [comment, setComment] = useState("");
-  let [check, setCheck] = useState(false);
   let [commentsdata, setCommentsdata] = useState([]);
-
+  let [comment, setComment] = useState([]);
+  let [post, setPost] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
-  const [showComment, setShowComment] = useState(false);
-  const [comments, setComments] = useState([]);
-
-  // function reverseit() {
-  //   var arr = [];
-  //   for (var i = props.post.length - 1; i > 0; i--) {
-  //     arr.push(props.post[i]);
-  //   }
-  //   return arr;
-  // }
-  // useEffect(() => reverseit(), []);
-  // console.log(reverseit());
-
-  // console.log(data);
-
-  // console.log(number_like);
 
   let updatelike = (number_like, id) => {
-    // e.preventDefault();
     axios
       .put(`http://localhost:5000/api/posts/updatelike/${id}`, {
         like: number_like + 1,
       })
       .then(() => {
-        window.location.reload();
+        window.location.reload(false);
         console.log("like updated");
       })
       .catch((error) => {
@@ -57,11 +41,12 @@ let Blog = (props) => {
   };
 
   let addComment = (id_user, id_post) => {
+    const iduser = props.profile.uid;
     axios
       .post(`http://localhost:5000/api/comments/add`, {
         commentcontent: comment,
         likes: 0,
-        user_iduser: id_user,
+        user_iduser: iduser,
         post_idpost: id_post,
       })
       .then(() => {
@@ -78,33 +63,42 @@ let Blog = (props) => {
     axios
       .get(`http://localhost:5000/api/comments/getCommentOnePost/${idpost}`)
       .then((res) => {
-        setComments(res.data);
+        setCommentsdata(res.data);
+        setView("Comment");
         console.log(res.data);
       });
   };
 
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/comments/getall").then((result) => {
+      // console.log(result.data);
+      setComment(result.data);
+    });
+  }, []);
 
-
-
-
-
-
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/posts/getall").then((result) => {
+      // console.log(result.data);
+      setPost(result.data);
+    });
+  }, []);
 
   let DeletePoste = (idpost) => {
     axios.delete(`http://localhost:5000/api/posts/del/${idpost}`).then(() => {
       console.log("deleted");
-      window.location.reload(false);
+      // window.location.reload(false);
     });
   };
 
   return (
     <div>
+      <Navbar />
       <div>
-        <AddBlog />
+        <AddBlog id={props.profile.uid} />
       </div>
 
       <div>
-        {props.post.map((element, index) => {
+        {post.map((element, index) => {
           return (
             <div>
               <center>
@@ -112,35 +106,38 @@ let Blog = (props) => {
                   <MDBCard style={{ maxWidth: "42rem" }}>
                     <MDBCardBody>
                       <div className="d-flex mb-3">
-                        <a href="#!">
-                          <img
-                            src={element.imageuser}
-                            className="border rounded-circle me-2"
-                            alt="Avatar"
-                            style={{ height: "40px" }}
-                          />
-                        </a>
+                        <img
+                          src={element.imageuser}
+                          className="border rounded-circle me-2"
+                          alt="Avatar"
+                          style={{ height: "40px" }}
+                        />
+
                         <div>
                           <a href="#!" className="text-dark mb-0">
-                            {/* <div>
-                              <select id="list">
-                                <option> ... </option>
-                                <button
-                                  className="list-group"
-                                  onClick={() => {
-                                    console.log("clikedd");
-                                  }}
-                                >
-                                  Delete Post
-                                </button>
-                                <option className="list-group">
-                                  Update Post
-                                </option>
-                              </select>
-                            </div> */}
-                            <button id="list">del </button>
                             <strong>{element.username} </strong>
-                          </a>
+                          </a>{" "}
+                          {element.user_iduser === props.profile.uid ? (
+                            <button
+                              onClick={() => {
+                                DeletePoste(element.idpost);
+                              }}
+                              id="list"
+                            >
+                              {" "}
+                              🗑️{" "}
+                            </button>
+                          ) : null}
+                          {element.user_iduser === props.profile.uid ? (
+                            <button
+                              onClick={() => {
+                                props.selectBlog(element.idpost);
+                              }}
+                              id="list1"
+                            >
+                              ⚙️{" "}
+                            </button>
+                          ) : null}
                           <a
                             href="#!"
                             className="text-muted d-block"
@@ -207,26 +204,23 @@ let Blog = (props) => {
                         </button>
                         <MDBIcon fas icon="comment-alt" className="me-2" />
 
-                        <span
+                        <b
                           onClick={() => {
                             getComments(element.idpost);
                             setModalShow(true);
                           }}
                         >
-                          Comment{" "}
-                        </span>
-                        <MDBBtn size="lg" rippleColor="dark" color="link">
-                          {/* <MDBIcon fas icon="share" className="me-2" /> Share */}
-                        </MDBBtn>
+                          Show all Comments
+                        </b>
                       </div>
                       <div className="d-flex mb-3">
                         <a href="#!">
-                          <img
+                          {/*<img
                             src={element.imageuser}
                             className="border rounded-circle me-2"
                             alt="Avatar"
                             style={{ height: "40px" }}
-                          />
+                        />*/}
                         </a>
                         <MDBTextArea
                           onChange={(event) => {
@@ -249,29 +243,6 @@ let Blog = (props) => {
                         </div>
                       </div>
 
-                      {/* <div className="d-flex mb-3">
-                        <a href="#!">
-                          <img
-                            src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-                            className="border rounded-circle me-2"
-                            alt="Avatar"
-                            style={{ height: "40px" }}
-                          />
-                        </a>
-                        <div>
-                          <div className="bg-light rounded-3 px-3 py-1">
-                            <a href="#!" className="text-dark mb-0">
-                              <strong>
-                                Malcolm Dosh 
-                              </strong>
-                            </a>
-                            <a href="#!" className="text-muted d-block"></a>
-                          </div>
-
-                          <small> {element.commentcontent} </small>
-                        </div>
-                        //
-                      </div> */}
                       <div className="d-flex mb-3"></div>
                     </MDBCardBody>
                   </MDBCard>
@@ -281,46 +252,18 @@ let Blog = (props) => {
           );
         })}
       </div>
-      <>
-        {/* <Button variant="primary">See Comments</Button> */}
-
-        <MyVerticallyCenteredModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          comments={comments}
-        />
-      </>
       <div> {view === "Add" && <AddBlog />}</div>
       <div></div>
+      <>
+        <SeeCommentBlog
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          comments={commentsdata}
+          iduser={props.profile.uid}
+        />
+      </>
     </div>
   );
 };
 
 export default Blog;
-
-// {
-//   props.comment.map((element, index) => {
-//     return (
-//      <div className="d-flex mb-3">
-//                         <a href="#!">
-//                           <img
-//                             src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-//                             className="border rounded-circle me-2"
-//                             alt="Avatar"
-//                             style={{ height: "40px" }}
-//                           />
-//                         </a>
-//                         <div>
-//                           <div className="bg-light rounded-3 px-3 py-1">
-//                             <a href="#!" className="text-dark mb-0">
-//                               <strong>Malcolm Dosh</strong>
-//                             </a>
-//                             <a href="#!" className="text-muted d-block"></a>
-//                           </div>
-
-//                           <small> {element.commentcontent} </small>
-//                         </div> //
-//                       </div>
-//     );
-//   });
-// }
