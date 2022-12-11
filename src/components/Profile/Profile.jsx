@@ -24,6 +24,7 @@ export default function Profile({ profile }) {
   const [iduser2, setIdUser2] = useState(profile.uid);
   const [email2, setEmail2] = useState(email);
   const [username2, setUsername] = useState(defaultName);
+  const [submit, setSubmit] = useState(false);
 
   const [bio2, setBio2] = useState("no bio here");
   const [categorie2, setCategoie2] = useState("no categorie selected");
@@ -60,6 +61,7 @@ export default function Profile({ profile }) {
         imageuser: image2,
       })
       .then(() => {
+        setSubmit(true);
         console.log("yeeyyy updated");
         // window.location.reload();
       });
@@ -151,6 +153,13 @@ export default function Profile({ profile }) {
                 >
                   Save changes
                 </button>
+                <div>
+                  {submit ? (
+                    <div class="alert alert-success">
+                      <strong>Success!</strong> You have added a profile
+                    </div>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

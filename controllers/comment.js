@@ -57,5 +57,14 @@ module.exports = {
       },
       req.params.idpost
     )
+  },
+
+  likeComment:function(req,res){
+    comment.likeComment((error,results)=>{
+      if(error) res.status(500).send(error);
+      else res.json(results);
+    },req.params.idcomment)
   }
+
+
 };

@@ -31,20 +31,20 @@ function OurNavbar(props) {
   const navigate = useNavigate();
   const [view, setView] = useState("Home");
   const [showBasic, setShowBasic] = useState(false);
-  const [footballNews, setFootballNews] = useState([]);
+
   const [searched, setSearched] = useState("");
   const [searchedData, setSearchedData] = useState([]);
   const [check, setCheck] = useState(false);
 
-  useEffect(() => {
-    async function getResults() {
-      const results = await axios(
-        "http://localhost:5000/api/posts/getFootballNews"
-      );
-      setFootballNews(results.data);
-    }
-    getResults();
-  }, []);
+  // useEffect(() => {
+  //   async function getResults() {
+  //     const results = await axios(
+  //       "http://localhost:5000/api/posts/getFootballNews"
+  //     );
+  //     setFootballNews(results.data);
+  //   }
+  //   getResults();
+  // }, []);
 
   const disconnect = () => {
     const auth = getAuth();
@@ -80,7 +80,7 @@ function OurNavbar(props) {
         <MDBContainer fluid style={{ backgroundColor: "#77DD77" }}>
           <MDBNavbarBrand href="#">
             <img
-              src="https://toppng.com/public/uploads/preview/silhouette-football-player-shooting-soccer-player-silhouette-11563236530t8inyn0tfx.png"
+              src="https://i.ibb.co/d4qS7fY/clipart2274341.png"
               alt="..."
               height="36"
             />
@@ -110,7 +110,7 @@ function OurNavbar(props) {
               </MDBNavbarItem>
 
               <MDBNavbarItem>
-                <MDBNavbarLink onClick={() => navigate("/profile")}>
+                <MDBNavbarLink onClick={() => navigate("/Profile")}>
                   Profile
                 </MDBNavbarLink>
               </MDBNavbarItem>
@@ -133,11 +133,18 @@ function OurNavbar(props) {
                     Categories
                   </MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem link onClick={() => setView("football")}>
+                    <MDBDropdownItem link onClick={() => navigate("/Football")}>
                       FootBall
                     </MDBDropdownItem>
-                    <MDBDropdownItem link>Tennis</MDBDropdownItem>
-                    <MDBDropdownItem link>Basketball</MDBDropdownItem>
+                    <MDBDropdownItem link onClick={() => navigate("/Tennis")}>
+                      Tennis
+                    </MDBDropdownItem>
+                    <MDBDropdownItem
+                      link
+                      onClick={() => navigate("/Basketball")}
+                    >
+                      Basketball
+                    </MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavbarItem>
@@ -178,7 +185,6 @@ function OurNavbar(props) {
           </MDBNavbarItem>
         </MDBContainer>
       </MDBNavbar>
-      {view === "football" && <FootballNews data={footballNews} />}
       {view === "Search" && <Search serchedData={fill()} />}
     </div>
   );

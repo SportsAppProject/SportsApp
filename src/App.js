@@ -11,7 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import WorldNews from "./components/WorldNews/WorldNews.jsx";
-
+import FootballNews from "./components/FootballNews/FootballNews.jsx";
+import BasketballNews from "./components/FootballNews/BasketballNews.jsx";
+import TennisNews from "./components/FootballNews/TennisNews.jsx";
+import UpdateBlog from "./components/UpdateBlog/UpdateBlog";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
@@ -21,6 +24,7 @@ function App() {
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
   const [view, setView] = useState("Login");
+  const [update, setUpdate] = React.useState([]);
 
   function changeView() {
     if (initializing) return null;
@@ -46,19 +50,25 @@ function App() {
     })
   );
 
+  let selectBlog = (element) => {
+    setUpdate(element);
+    navigate("/UpdateBlog");
+  };
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home profile={user} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/blog" element={<Blog selectBlog={selectBlog} />} />
         <Route path="/WorldNews" element={<WorldNews />} />
         <Route path="/Profile" element={<Profile profile={user} />} />
+        <Route path="/Football" element={<FootballNews />} />
+        <Route path="/Basketball" element={<BasketballNews />} />
+        <Route path="/Tennis" element={<TennisNews />} />
+        <Route path="/UpdateBlog" element={<UpdateBlog update={update} />} />
       </Routes>
-      {/* {view === "Home" && <Home dataUser={user} />}
-      {view === "Login" && <Login />}
-      {view === "Blog" && <Blog />} */}
     </div>
   );
 }
