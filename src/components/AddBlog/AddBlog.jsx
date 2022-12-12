@@ -11,6 +11,7 @@ let AddBlog = (props) => {
   const [image, setImage] = useState("");
   const [select, setSelect] = useState("");
   const [data, setData] = useState([]);
+  const [submit, setSubmit] = useState(false);
 
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
@@ -50,11 +51,11 @@ let AddBlog = (props) => {
     e.preventDefault();
     axios
       .post("http://localhost:5000/api/posts/add", {
-        postedat: "Posted on : " + posted_at,
+        postedat: "Posted at : " + posted_at,
         posttitle: title,
         postcontent: content,
         postimage: url,
-        category: select,
+        categorie: select,
         user_iduser: props.id, //  logicly the connected personne
         like: 0,
       })
@@ -77,6 +78,7 @@ let AddBlog = (props) => {
       .then((result) => {
         console.log(result.data.secure_url);
         setUrl(result.data.secure_url);
+        setSubmit(true);
       })
       .catch((err) => {
         console.log(err);
@@ -121,6 +123,11 @@ let AddBlog = (props) => {
           </div>
           <button className="button-3 " onClick={uplodImage}>
             Upload Image
+            {submit ? (
+              <div class="alert alert-success">
+                <strong>Success!</strong> Image URL created, you can save now.
+              </div>
+            ) : null}
           </button>
           <div>
             <select

@@ -149,7 +149,7 @@ const Login = () => {
 
                 <div className="d-flex justify-content-around align-items-center mb-4">
                   {/* <!-- Checkbox --> */}
-                  <div className="form-check">
+                  {/* <div className="form-check">
                     <input
                       className="form-check-input"
                       type="checkbox"
@@ -157,8 +157,8 @@ const Login = () => {
                       id="form1Example3"
                     />
                     <label className="form-check-label"> Remember me </label>
-                  </div>
-                  <a href="#!">Forgot password?</a>
+                  </div> */}
+                  {/* <a href="#!">Forgot password?</a> */}
                 </div>
 
                 {/* <!-- Submit button AND INSERTING THE NEW USER TO THE DATABASE --> */}
