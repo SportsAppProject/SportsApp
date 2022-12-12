@@ -41,11 +41,12 @@ let Blog = (props) => {
   };
 
   let addComment = (id_user, id_post) => {
+    const iduser = props.profile.uid;
     axios
       .post(`http://localhost:5000/api/comments/add`, {
         commentcontent: comment,
         likes: 0,
-        user_iduser: id_user,
+        user_iduser: iduser,
         post_idpost: id_post,
       })
       .then(() => {
@@ -115,25 +116,28 @@ let Blog = (props) => {
                         <div>
                           <a href="#!" className="text-dark mb-0">
                             <strong>{element.username} </strong>
-                          </a>
-                          <button
-                            onClick={() => {
-                              DeletePoste(element.idpost);
-                            }}
-                            id="list"
-                          >
-                            {" "}
-                            🗑️{" "}
-                          </button>
-                          <button
-                            onClick={() => {
-                              props.selectBlog(element.idpost);
-                            }}
-                            id="list1"
-                          >
-                            ⚙️{" "}
-                          </button>
-
+                          </a>{" "}
+                          {element.user_iduser === props.profile.uid ? (
+                            <button
+                              onClick={() => {
+                                DeletePoste(element.idpost);
+                              }}
+                              id="list"
+                            >
+                              {" "}
+                              🗑️{" "}
+                            </button>
+                          ) : null}
+                          {element.user_iduser === props.profile.uid ? (
+                            <button
+                              onClick={() => {
+                                props.selectBlog(element.idpost);
+                              }}
+                              id="list1"
+                            >
+                              ⚙️{" "}
+                            </button>
+                          ) : null}
                           <a
                             href="#!"
                             className="text-muted d-block"
@@ -200,23 +204,23 @@ let Blog = (props) => {
                         </button>
                         <MDBIcon fas icon="comment-alt" className="me-2" />
 
-                        <span
+                        <b
                           onClick={() => {
                             getComments(element.idpost);
                             setModalShow(true);
                           }}
                         >
                           Show all Comments
-                        </span>
+                        </b>
                       </div>
                       <div className="d-flex mb-3">
                         <a href="#!">
-                          <img
+                          {/*<img
                             src={element.imageuser}
                             className="border rounded-circle me-2"
                             alt="Avatar"
                             style={{ height: "40px" }}
-                          />
+                        />*/}
                         </a>
                         <MDBTextArea
                           onChange={(event) => {
@@ -255,6 +259,7 @@ let Blog = (props) => {
           show={modalShow}
           onHide={() => setModalShow(false)}
           comments={commentsdata}
+          iduser={props.profile.uid}
         />
       </>
     </div>

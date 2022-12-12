@@ -157,8 +157,8 @@ const Login = () => {
                       id="form1Example3"
                     />
                     <label className="form-check-label"> Remember me </label>
-                  </div> */}
-                  {/* <a href="#!">Forgot password?</a> */}
+                  </div>
+                  <a href="#!">Forgot password?</a> */}
                 </div>
 
                 {/* <!-- Submit button AND INSERTING THE NEW USER TO THE DATABASE --> */}

@@ -51,11 +51,11 @@ let AddBlog = (props) => {
     e.preventDefault();
     axios
       .post("http://localhost:5000/api/posts/add", {
-        postedat: "Posted at : " + posted_at,
+        postedat: "Posted on : " + posted_at,
         posttitle: title,
         postcontent: content,
         postimage: url,
-        categorie: select,
+        category: select,
         user_iduser: props.id, //  logicly the connected personne
         like: 0,
       })

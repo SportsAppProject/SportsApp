@@ -3,10 +3,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../NavBar/Navbar.jsx";
+import "./Profile.css";
 
 export default function Profile({ profile }) {
   const [check, setCheck] = useState(false);
   const [show, setShow] = useState();
+
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
 
   // var buttonText = show ? "Hide Component" : "Show Component";
 
@@ -58,12 +62,30 @@ export default function Profile({ profile }) {
         bio: bio2,
         gender: gender2,
         categorie: categorie2,
-        imageuser: image2,
+        imageuser: url,
       })
       .then(() => {
         setSubmit(true);
         console.log("yeeyyy updated");
         // window.location.reload();
+      });
+  };
+
+  // ddvyi3jpk
+  //ahmedmejdoub
+
+  let uplodImage = async () => {
+    const form = new FormData();
+    form.append("file", file); // file is a varaible contain the picture
+    form.append("upload_preset", "ahmedmejdoub");
+    await axios
+      .post("https://api.cloudinary.com/v1_1/ddvyi3jpk/upload", form) // send the form to cloudinary
+      .then((result) => {
+        console.log(result.data.secure_url); // get the url of the image
+        setUrl(result.data.secure_url);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -143,7 +165,19 @@ export default function Profile({ profile }) {
                     onChange={(e) => setImage2(e.target.value)}
                   />
                 </div>
+
+                <div>
+                  <input
+                    className="upload"
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </div>
               </div>
+              <button className="button-3-profile" onClick={uplodImage}>
+                Upload Image
+              </button>
+              <div></div>
               <div class="mt-5 text-center">
                 <button
                   type="button"

@@ -108,6 +108,11 @@
     font-size: 16px;
 }
 
+#list-comment{
+    float:right;
+}
+
+
 #list1 {
     background-color: #ebebeb;
     /* Green */
@@ -142,3 +147,34 @@ background-color: #ebebeb;
 
 
 }
+
+.button-like-comment {
+    border: 2px;
+    background-color: transparent;
+    text-decoration: none;
+    padding: 0px;
+    width: 40px;
+    font-weight: bold;
+    height: 30px;
+    position: relative;
+    right: 35px;
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50rem;
+    color: rgb(119, 221, 119);
+    transition: all ease 0.4s;
+}
+
+.button-like-comment-total {
+    width: 40px;
+    height: 30px;
+    position: relative;
+    left: 720px;
+    vertical-align: middle;
+    text-decoration: underline;
+    border-radius: 50rem;
+    color: blue;
+    
+}
+
